@@ -111,6 +111,7 @@ export default function ModernNavbar() {
         return <FileText className="h-5 w-5" />
       case "mail":
         return <Mail className="h-5 w-5" />
+        
       default:
         return null
     }

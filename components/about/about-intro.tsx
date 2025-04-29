@@ -4,7 +4,6 @@ import { HandshakeIcon, LineChartIcon, BarChart3Icon } from "lucide-react"
 import { useRef } from "react"
 import { motion, useInView } from "framer-motion"
 import { Card, CardContent } from "@/components/ui/card"
-import VisionSection from "../vision-values"
 import OurJourney from "@/components/our-journey"
 import Vision from "@/components/vision-values/vision-section"
 

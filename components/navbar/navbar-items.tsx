@@ -176,7 +176,7 @@ export const navItems: NavItemType[] = [
     id: "Careers",
     title: "Careers",
     href: "/why-access/career",
-    
+    icon: "Career",
   },
 ]
 

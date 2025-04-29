@@ -8,7 +8,6 @@ import VisionValues from "@/components/vision-values"
 import PrestigiousClients from "@/components/prestigious-clients"
 import Footer from "@/components/footer"
 import LoadingScreen from "@/components/loading-screen"
-import ServicesPage from "./services/page"
 
 export default function Home() {
   const mainRef = useRef<HTMLElement>(null)

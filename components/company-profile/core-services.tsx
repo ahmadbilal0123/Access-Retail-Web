@@ -275,13 +275,13 @@ export function CoreServices() {
           label: "Store Audits Monthly",
           value: "48,000",
           icon: <BarChart3 className="h-4 w-4" />,
-          isWhite: false,
+          isWhite: true,
         },
         {
           label: "Items Covered Monthly",
           value: "40,000+",
           icon: <Activity className="h-4 w-4" />,
-          isWhite: false,
+          isWhite: true,
         },
         {
           label: "Turnover Reported Annually",
@@ -293,7 +293,7 @@ export function CoreServices() {
           label: "Field Auditors",
           value: "250+",
           icon: <Users className="h-4 w-4" />,
-          isWhite: false,
+          isWhite: true,
         },
         {
           label: "Coverage",
@@ -370,7 +370,7 @@ export function CoreServices() {
                               className={`text-3xl font-bold mb-2 ${stat.isWhite ? "text-white" : "text-[#ff2a2a]"}`}
                             >
                               {stat.value}
-                              
+
                             </div>
                             <div className="text-sm text-blue-100 font-medium">{stat.label}</div>
                           </motion.div>

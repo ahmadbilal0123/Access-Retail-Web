@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react"
 import { Button } from "@/components/ui/button"
-import Script from "next/script"
+import { usePathname } from "next/navigation"
 
 export default function Hero() {
   const vantaRef = useRef<HTMLDivElement>(null)
@@ -18,11 +18,47 @@ export default function Hero() {
   const subtitleRef = useRef<HTMLParagraphElement>(null)
 
   const [vantaEffect, setVantaEffect] = useState<any>(null)
-  const [vantaLoaded, setVantaLoaded] = useState(false)
   const [isVisible, setIsVisible] = useState(false)
   const [gsapLoaded, setGsapLoaded] = useState(false)
+  const [isInitialized, setIsInitialized] = useState(false)
+  const pathname = usePathname()
 
+  // Load scripts only once when component mounts
   useEffect(() => {
+    // Load scripts only if they haven't been loaded yet
+    if (!window.THREE) {
+      const threeScript = document.createElement("script")
+      threeScript.src = "https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"
+      threeScript.async = true
+      document.head.appendChild(threeScript)
+    }
+
+    if (!window.VANTA) {
+      const vantaScript = document.createElement("script")
+      vantaScript.src = "https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.waves.min.js"
+      vantaScript.async = true
+      document.head.appendChild(vantaScript)
+    }
+
+    if (!window.gsap) {
+      const gsapScript = document.createElement("script")
+      gsapScript.src = "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"
+      gsapScript.async = true
+      document.head.appendChild(gsapScript)
+    }
+
+    // Check if scripts are loaded
+    const checkScriptsLoaded = setInterval(() => {
+      if (window.THREE && window.VANTA && window.VANTA.WAVES) {
+        clearInterval(checkScriptsLoaded)
+        initializeVanta()
+      }
+
+      if (window.gsap && !gsapLoaded) {
+        setGsapLoaded(true)
+      }
+    }, 100)
+
     setIsVisible(true)
 
     // Force visibility of all elements after animations
@@ -34,8 +70,53 @@ export default function Hero() {
       })
     }, 1200)
 
-    return () => clearTimeout(timer)
+    return () => {
+      clearInterval(checkScriptsLoaded)
+      clearTimeout(timer)
+    }
   }, [])
+
+  // Initialize Vanta effect
+  const initializeVanta = () => {
+    if (isInitialized || !vantaRef.current || !window.VANTA) return
+
+    try {
+      console.log("Initializing Vanta effect")
+      const effect = window.VANTA.WAVES({
+        el: vantaRef.current,
+        THREE: window.THREE,
+        mouseControls: true,
+        touchControls: true,
+        gyroControls: false,
+        minHeight: 200.0,
+        minWidth: 200.0,
+        scale: 1.0,
+        scaleMobile: 1.0,
+        color: 0x0a1d3b,
+        shininess: 40.0,
+        waveHeight: 15.0,
+        waveSpeed: 0.75,
+        zoom: 0.65,
+        forceAnimate: true,
+      })
+      setVantaEffect(effect)
+      setIsInitialized(true)
+    } catch (error) {
+      console.error("Failed to initialize Vanta effect:", error)
+    }
+  }
+
+  // Handle cleanup on unmount or pathname change
+  useEffect(() => {
+    return () => {
+      if (vantaEffect) {
+        console.log("Destroying Vanta effect")
+        vantaEffect.destroy()
+        setVantaEffect(null)
+        setIsInitialized(false)
+      }
+    }
+  }, [pathname])
 
   // GSAP animations for the Coverage Network
   useEffect(() => {
@@ -263,37 +344,6 @@ export default function Hero() {
     }, 1000) // Start idle animations after 1 second
   }, [gsapLoaded])
 
-  useEffect(() => {
-    if (!vantaLoaded) return
-
-    // Make sure THREE is available
-    if (!vantaEffect && vantaRef.current && window.THREE) {
-      // @ts-ignore - Vanta is loaded via script
-      setVantaEffect(
-        window.VANTA.WAVES({
-          el: vantaRef.current,
-          THREE: window.THREE, // Explicitly pass THREE
-          mouseControls: true,
-          touchControls: true,
-          gyroControls: false,
-          minHeight: 200.0,
-          minWidth: 200.0,
-          scale: 1.0,
-          scaleMobile: 1.0,
-          color: 0x0a1d3b, // Dark blue color
-          shininess: 60.0,
-          waveHeight: 20.0,
-          waveSpeed: 1.0,
-          zoom: 0.65,
-        }),
-      )
-    }
-
-    return () => {
-      if (vantaEffect) vantaEffect.destroy()
-    }
-  }, [vantaEffect, vantaLoaded])
-
   const scrollToContent = () => {
     window.scrollTo({
       top: window.innerHeight,
@@ -303,22 +353,16 @@ export default function Hero() {
 
   return (
     <>
-      <Script
-        src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"
-        onLoad={() => {
-          console.log("Three.js loaded")
-          // Only load Vanta after THREE is loaded
-          const vantaScript = document.createElement("script")
-          vantaScript.src = "https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.waves.min.js"
-          vantaScript.onload = () => setVantaLoaded(true)
-          document.body.appendChild(vantaScript)
-        }}
-      />
-      <Script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" onLoad={() => setGsapLoaded(true)} />
-
       <div className="relative min-h-screen flex items-center">
         {/* Vanta.js Background */}
-        <div ref={vantaRef} className="absolute inset-0 z-0" aria-hidden="true"></div>
+        <div
+          ref={vantaRef}
+          className="absolute inset-0 z-0"
+          aria-hidden="true"
+          style={{
+            backgroundColor: "#0a1d3b", // Fallback color while Vanta loads
+          }}
+        ></div>
 
         {/* Dark Overlay with Gradient */}
         <div className="absolute inset-0 bg-gradient-to-b from-blue-950/70 via-blue-900/60 to-blue-950/80 z-10"></div>
@@ -345,8 +389,8 @@ export default function Hero() {
                 className="text-base sm:text-lg md:text-xl text-blue-100 leading-relaxed animate-hero animate-quick-fade"
                 style={{ animationDelay: "0.2s" }}
               >
-               We empower your Retail performance with Extensive Reporting Capability, and Cutting Edge Insights Befitting your Information Needs
-
+                We empower your Retail performance with Extensive Reporting Capability, and Cutting Edge Insights
+                Befitting your Information Needs
               </p>
 
               <div
@@ -436,6 +480,7 @@ export default function Hero() {
                         0+
                       </span>
                       <span ref={districtTextRef} className="text-sm text-blue-100 mt-1 opacity-0">
+                        Districts
                       </span>
                     </div>
                   </div>
@@ -482,3 +527,13 @@ export default function Hero() {
   )
 }
 
+// Add these type definitions for global objects
+declare global {
+  interface Window {
+    THREE: any
+    VANTA: {
+      WAVES: (options: any) => any
+    }
+    gsap: any
+  }
+}
