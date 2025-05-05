@@ -217,9 +217,15 @@ export default function TradeMarginStudiesPage() {
                   Comprehensive analysis of pricing strategies, discount patterns, and margin structures to optimize
                   your pricing and promotional strategies.
                 </motion.p>
+
+                
               </motion.div>
+
+              
             </div>
           </div>
+
+          
         </section>
 
         {/* Features Section - Hexagonal grid */}
@@ -232,21 +238,30 @@ export default function TradeMarginStudiesPage() {
               whileInView="visible"
               viewport={{ once: true, amount: 0.2 }}
             >
-              <div className="flex justify-center mb-4">
-                <motion.div
-                  className="h-1 w-16 bg-red-600"
-                  initial={{ width: 0 }}
-                  whileInView={{ width: 64 }}
-                  transition={{ duration: 0.8 }}
-                  viewport={{ once: true }}
-                />
+             <div className="flex justify-center mb-4">
+              <motion.div
+                        className="h-1 w-20 bg-gradient-to-r from-red-500 to-blue-500 mx-auto mb-4"
+                        initial={{ width: 0 }}
+                        animate={{ width: 80 }}
+                        transition={{ duration: 1, delay: 0.3 }}
+                          />
               </div>
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Key Features</h2>
-              <p className="text-white/80 max-w-2xl mx-auto">
+              <h2 className="text-3xl md:text-4xl font-bold text-blue-500 mb-4">
+                Key<span className=" text-white"> - Offerings</span>
+              </h2>
+              
+              <motion.div
+                        className="h-1 w-20 bg-gradient-to-r from-red-500 to-blue-500 mx-auto mb-4"
+                        initial={{ width: 0 }}
+                        animate={{ width: 80 }}
+                        transition={{ duration: 1, delay: 0.3 }}
+                          />
+               <p className="text-white/80 max-w-2xl mx-auto">
                 Our trade margin studies provide comprehensive insights into pricing strategies and market dynamics
               </p>
             </motion.div>
-
+            
+           
             <div className="flex flex-wrap justify-center gap-6">
               {[
                 {

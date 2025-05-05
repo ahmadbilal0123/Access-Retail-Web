@@ -89,9 +89,9 @@ export default function Footer() {
               <FooterLink href="/about" label="About Us" />
               <FooterLink href="/" label="What We Offer/Our Services" />
               {/* <FooterLink href="/capabilities" label="Capabilities" /> */}
-              <FooterLink href="" label="Leadership" />
-              <FooterLink href="#" label="Why Access Retail" />
-              <FooterLink href="#" label="Life @ Access Retail  " />
+              <FooterLink href="/why-access/leadership" label="Leadership" />
+              <FooterLink href="/why-access/success-story" label="Why Access Retail?" />
+              <FooterLink href="/why-access/life-in-access" label="Life @ Access Retail  " />
               <FooterLink href="/why-access/career" label="Careers" />
               {/* <FooterLink href="/blog" label="Blog" /> */}
               <FooterLink href="/contact" label="Contact" />
@@ -162,6 +162,9 @@ export default function Footer() {
             </p>
 
             <div className="flex items-center space-x-4">
+            <Link href="https://www.gen-tsolutions.com/" className="text-blue-200 hover:text-white text-sm transition-colors">
+                Powered By <span className="text-white" >Gen-T AI Solutions</span>
+              </Link>
               <Link href="/privacy-policy" className="text-blue-200 hover:text-white text-sm transition-colors">
                 Privacy Policy
               </Link>

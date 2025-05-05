@@ -45,29 +45,7 @@ export default function TeamSection() {
         <div className="absolute bottom-1/3 left-1/3 w-80 h-80 rounded-full bg-red-500/10 blur-xl"></div>
       </div>
 
-      {/* <div className="container mx-auto px-4 relative z-10">
-        <div ref={headerRef} className="mb-16">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isHeaderInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 0.7 }}
-            className="text-center"
-          >
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Meet Our Leadership</h2>
-            <div className="w-20 h-1 bg-gradient-to-r from-red-500 to-blue-500 mx-auto mb-6"></div>
-            <p className="text-blue-100 max-w-2xl mx-auto">
-            Passionate About Excellence In Research
-
-            </p>
-          </motion.div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {teamMembers.map((member, index) => (
-            <TeamMember key={member.id} member={member} index={index} />
-          ))}
-        </div>
-      </div> */}
+   
     </section>
 
     

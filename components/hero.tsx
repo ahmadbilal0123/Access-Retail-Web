@@ -23,6 +23,20 @@ export default function Hero() {
   const [isInitialized, setIsInitialized] = useState(false)
   const pathname = usePathname()
 
+  const scrollToEvolutionSection = () => {
+    const evolutionSection = document.getElementById("evolution")
+    if (evolutionSection) {
+      // Add a small offset to ensure the heading is not hidden behind any fixed elements
+      const yOffset = -80 // Adjust this value based on your header height
+      const y = evolutionSection.getBoundingClientRect().top + window.pageYOffset + yOffset
+
+      window.scrollTo({
+        top: y,
+        behavior: "smooth",
+      })
+    }
+  }
+
   // Load scripts only once when component mounts
   useEffect(() => {
     // Load scripts only if they haven't been loaded yet
@@ -344,13 +358,6 @@ export default function Hero() {
     }, 1000) // Start idle animations after 1 second
   }, [gsapLoaded])
 
-  const scrollToContent = () => {
-    window.scrollTo({
-      top: window.innerHeight,
-      behavior: "smooth",
-    })
-  }
-
   return (
     <>
       <div className="relative min-h-screen flex items-center">
@@ -401,6 +408,7 @@ export default function Hero() {
                   className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 
                 text-white px-6 sm:px-8 py-5 sm:py-6 text-base sm:text-lg rounded-full shadow-lg shadow-red-600/20 
                 transition-all duration-300 hover:shadow-red-600/40 hover:translate-y-[-2px]"
+                  onClick={scrollToEvolutionSection}
                 >
                   Learn More
                 </Button>
@@ -511,17 +519,7 @@ export default function Hero() {
         </div>
 
         {/* Mouse-shaped Scroll Indicator */}
-        <div className="scroll-indicator-container">
-          <button onClick={scrollToContent} className="scroll-indicator-button">
-            <svg width="20" height="35" viewBox="0 0 20 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-              {/* Outer rect for the mouse shape */}
-              <rect x="1" y="1" width="18" height="33" rx="9" stroke="rgba(255, 255, 255, 0.7)" strokeWidth="1" />
-              {/* Inner circle for the scroll wheel */}
-              <circle cx="10" cy="10" r="1.5" fill="rgba(255, 255, 255, 0.7)" />
-            </svg>
-            <span className="scroll-indicator-text">scroll</span>
-          </button>
-        </div>
+       
       </div>
     </>
   )

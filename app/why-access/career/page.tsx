@@ -15,6 +15,7 @@ import {
   CheckCircle,
   ArrowRight,
   Send,
+  ChevronDown,
 } from "lucide-react"
 import Image from "next/image"
 import { motion } from "framer-motion"
@@ -190,7 +191,8 @@ const testimonials: Testimonial[] = [
       "Working at Access Retail has been a transformative experience. The collaborative environment and opportunities for growth have helped me develop both professionally and personally.",
     name: "Sarah Ahmed",
     position: "Senior Data Analyst",
-    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/attachments/gen-images/public/confident-leader-USHTxs6brk9xOF7V6oSCch7WpqFEJY.png",
+    image:
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/attachments/gen-images/public/confident-leader-USHTxs6brk9xOF7V6oSCch7WpqFEJY.png",
     color: "blue",
   },
   {
@@ -199,7 +201,8 @@ const testimonials: Testimonial[] = [
       "I joined as a junior researcher and have grown into a team lead in just three years. The mentorship and learning opportunities here are unmatched in the industry.",
     name: "Imran Khan",
     position: "Research Team Lead",
-    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/attachments/gen-images/public/confident-leader-USHTxs6brk9xOF7V6oSCch7WpqFEJY.png",
+    image:
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/attachments/gen-images/public/confident-leader-USHTxs6brk9xOF7V6oSCch7WpqFEJY.png",
     color: "red",
   },
 ]
@@ -212,6 +215,10 @@ export default function CareersPage() {
   // State for visibility
   const [isVisible, setIsVisible] = useState<Record<number, boolean>>({})
   const observerRefs = useRef<(HTMLElement | null)[]>([])
+
+  const [isApplyModalOpen, setIsApplyModalOpen] = useState(false)
+  const [currentJobId, setCurrentJobId] = useState<string | null>(null)
+  const [isSubmitSuccess, setIsSubmitSuccess] = useState(false)
 
   // Scroll prevention logic during loading
   useEffect(() => {
@@ -297,6 +304,12 @@ export default function CareersPage() {
     }
   }
 
+  const handleApplyNow = (e: React.MouseEvent, jobId: string) => {
+    e.stopPropagation()
+    setCurrentJobId(jobId)
+    setIsApplyModalOpen(true)
+  }
+
   return (
     <>
       {loading && <LoadingScreen finishLoading={() => setLoading(false)} />}
@@ -326,7 +339,9 @@ export default function CareersPage() {
             transition={{ duration: 0.8, delay: 0.3 }}
             className="absolute inset-0 flex flex-col items-center justify-center z-20 text-center px-4"
           >
-            <h1 className="text-4xl md:text-6xl font-bold mb-4">Join <span className="text-red-500 ">Our</span> Team</h1>
+            <h1 className="text-4xl md:text-6xl font-bold mb-4">
+              Join <span className="text-red-500 ">Our</span> Team
+            </h1>
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: "6rem" }}
@@ -501,6 +516,13 @@ export default function CareersPage() {
                           <Clock size={16} className="mr-1 text-gray-400" />
                           <span className="text-gray-300">{job.experience}</span>
                         </div>
+                        <motion.div
+                          animate={{ rotate: activeJob === job.id ? 180 : 0 }}
+                          transition={{ duration: 0.3 }}
+                          className="ml-2 bg-blue-900/30 rounded-full p-1 flex items-center justify-center"
+                        >
+                          <ChevronDown size={18} className="text-blue-400" />
+                        </motion.div>
                       </div>
                     </div>
                   </div>
@@ -541,6 +563,7 @@ export default function CareersPage() {
                         </div>
 
                         <motion.button
+                          onClick={(e) => handleApplyNow(e, job.id)}
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
                           className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white py-2 px-6 rounded-md flex items-center transition-colors duration-300"
@@ -554,7 +577,7 @@ export default function CareersPage() {
               ))}
             </motion.div>
           </motion.section>
-          
+
           {/* Contact CTA */}
           <motion.section
             ref={(el) => addToRefs(el, 4)}
@@ -576,6 +599,10 @@ export default function CareersPage() {
                   </p>
                 </div>
                 <motion.button
+                  onClick={() => {
+                    setCurrentJobId(null)
+                    setIsApplyModalOpen(true)
+                  }}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white py-3 px-8 rounded-md flex items-center justify-center transition-colors duration-300 whitespace-nowrap"
@@ -588,6 +615,162 @@ export default function CareersPage() {
           </motion.section>
         </div>
         <Footer />
+        {/* Application Modal */}
+        {isApplyModalOpen && (
+          <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              className="bg-[#0a2252] border border-blue-800 rounded-lg p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+            >
+              <div className="flex justify-between items-center mb-6">
+                <h3 className="text-2xl font-bold">
+                  Apply for: {jobPostings.find((job) => job.id === currentJobId)?.title}
+                </h3>
+                <button
+                  onClick={() => setIsApplyModalOpen(false)}
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault()
+                  setIsSubmitSuccess(true)
+
+                  // Close the modal after showing success message for 3 seconds
+                  setTimeout(() => {
+                    setIsApplyModalOpen(false)
+                    setIsSubmitSuccess(false)
+                  }, 3000)
+                }}
+              >
+                <div className="space-y-4">
+                  <div>
+                    <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-1">
+                      Full Name
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      required
+                      className="w-full px-4 py-2 bg-[#001333] border border-blue-800 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-1">
+                      Email Address
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      required
+                      className="w-full px-4 py-2 bg-[#001333] border border-blue-800 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="phone" className="block text-sm font-medium text-gray-300 mb-1">
+                      Phone Number
+                    </label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      className="w-full px-4 py-2 bg-[#001333] border border-blue-800 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="experience" className="block text-sm font-medium text-gray-300 mb-1">
+                      Years of Experience
+                    </label>
+                    <select
+                      id="experience"
+                      className="w-full px-4 py-2 bg-[#001333] border border-blue-800 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+                    >
+                      <option value="0-1">Less than 1 year</option>
+                      <option value="1-2">1-2 years</option>
+                      <option value="3-5">3-5 years</option>
+                      <option value="5+">5+ years</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label htmlFor="resume" className="block text-sm font-medium text-gray-300 mb-1">
+                      Upload Resume (PDF)
+                    </label>
+                    <input
+                      type="file"
+                      id="resume"
+                      accept=".pdf,.doc,.docx"
+                      required
+                      className="w-full px-4 py-2 bg-[#001333] border border-blue-800 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="cover" className="block text-sm font-medium text-gray-300 mb-1">
+                      Cover Letter
+                    </label>
+                    <textarea
+                      id="cover"
+                      rows={4}
+                      className="w-full px-4 py-2 bg-[#001333] border border-blue-800 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white resize-none"
+                    ></textarea>
+                  </div>
+                </div>
+                {isSubmitSuccess && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="mb-6 p-4 bg-green-900/50 border border-green-700 rounded-md"
+                  >
+                    <div className="flex items-center">
+                      <div className="flex-shrink-0">
+                        <CheckCircle className="h-5 w-5 text-green-400" />
+                      </div>
+                      <div className="ml-3">
+                        <h3 className="text-sm font-medium text-green-300">Application submitted successfully!</h3>
+                        <div className="mt-2 text-sm text-green-200">
+                          <p>
+                            Thank you for your interest. Our team will review your application and contact you soon.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+                <div className="mt-6 flex justify-end">
+                  <button
+                    type="button"
+                    onClick={() => setIsApplyModalOpen(false)}
+                    className="mr-4 px-4 py-2 border border-gray-600 rounded-md text-gray-300 hover:bg-gray-800 transition-colors"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="px-6 py-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white rounded-md transition-colors"
+                  >
+                    Submit Application
+                  </button>
+                </div>
+              </form>
+            </motion.div>
+          </div>
+        )}
       </main>
     </>
   )

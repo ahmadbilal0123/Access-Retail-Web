@@ -47,7 +47,7 @@ export const navItems: NavItemType[] = [
   {
     id: "services",
     title: "What We Offer/Our Services",
-    href: "/services",
+    href: "#",
     icon: "layers",
     children: [
       {
@@ -163,20 +163,21 @@ export const navItems: NavItemType[] = [
     id: "Why Access Retail?",
     title: "Why Access Retail?",
     href: "/why-access/success-story",
-    
+    icon: "careers",
   },
 
   {
     id: "Life @ Access Retail",
     title: "Life @ Access Retail",
     href: "/why-access/life-in-access",
-    
+    icon: "zap",
   },
   {
     id: "Careers",
     title: "Careers",
     href: "/why-access/career",
-    icon: "Career",
+    icon: "briefcase",
+    
   },
 ]
 

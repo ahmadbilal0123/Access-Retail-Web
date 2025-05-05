@@ -28,7 +28,7 @@ export default function VisionSection() {
           >
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Our Vision & Values</h2>
             <div className="w-20 h-1 bg-gradient-to-r from-red-500 to-blue-500 mx-auto"></div>
-            <p className="mt-2">The principles that define our connection - within & outside</p>
+            <p className="mt-2 text-white">The principles that define our connection - within & outside</p>
           </motion.div>
 
           <Card className="bg-blue-900/30 backdrop-blur-sm border-blue-700/20 shadow-xl overflow-hidden mb-16">

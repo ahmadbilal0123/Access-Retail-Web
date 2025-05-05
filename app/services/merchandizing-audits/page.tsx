@@ -170,9 +170,12 @@ export default function MerchandizingAuditsPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <div className="flex justify-center mb-6">
-                
-              </div>
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: "100%" }}
+                  transition={{ duration: 1, delay: 0.5 }}
+                  className="h-0.5 bg-gradient-to-r from-transparent via-red-500 to-transparent mx-auto mb-8"
+                ></motion.div>
               <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6">
                 MERCHANDIZING
                 <br />
@@ -186,6 +189,14 @@ export default function MerchandizingAuditsPage() {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.6 }}
               >
+                   <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: "100%" }}
+                  transition={{ duration: 1, delay: 0.5 }}
+                  className="h-0.5 bg-gradient-to-r from-transparent via-red-500 to-transparent mx-auto mb-8"
+                ></motion.div>
+
+                  
                 <Link
                   href="#features"
                   className="px-6 py-3 bg-red-600 text-white font-medium rounded-lg hover:bg-red-700 transition-all shadow-lg"
@@ -213,7 +224,7 @@ export default function MerchandizingAuditsPage() {
         </section>
 
         {/* Features Section - Grid layout with large icons */}
-        <section id="features" className="py-20">
+        <section id="features" className="py-2">
           <div className="container mx-auto px-4">
             <motion.div
               className="text-center mb-16"
@@ -223,18 +234,22 @@ export default function MerchandizingAuditsPage() {
               viewport={{ once: true, amount: 0.2 }}
             >
               <div className="flex justify-center mb-4">
-                <motion.div
-                  className="h-1 w-16 bg-red-600"
-                  initial={{ width: 0 }}
-                  whileInView={{ width: 64 }}
-                  transition={{ duration: 0.8 }}
-                  viewport={{ once: true }}
-                />
+              <motion.div
+                        className="h-1 w-20 bg-gradient-to-r from-red-500 to-blue-500 mx-auto mb-4"
+                        initial={{ width: 0 }}
+                        animate={{ width: 80 }}
+                        transition={{ duration: 1, delay: 0.3 }}
+                          />
               </div>
               <h2 className="text-3xl md:text-4xl font-bold text-blue-500 mb-4">
                 Key<span className=" text-white"> - Offerings</span>
               </h2>
-             
+              <motion.div
+                        className="h-1 w-20 bg-gradient-to-r from-red-500 to-blue-500 mx-auto mb-4"
+                        initial={{ width: 0 }}
+                        animate={{ width: 80 }}
+                        transition={{ duration: 1, delay: 0.3 }}
+                          />
             </motion.div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -380,7 +395,9 @@ export default function MerchandizingAuditsPage() {
        <br></br>
        <br></br>
        <br></br>
-
+       <br></br>
+       <br></br>
+       <br></br>
         <Footer />
       </main>
     </>

@@ -41,7 +41,7 @@ const LeadershipCard = ({ leader, index }) => {
             src={leader.image || "/placeholder.svg"}
             alt={leader.name}
             fill
-            className="object-cover opacity-20"
+            className="object-cover opacity-70"
             sizes="(max-width: 768px) 100vw, 33vw"
           />
         )}

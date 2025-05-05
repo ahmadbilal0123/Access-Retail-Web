@@ -18,10 +18,113 @@ import {
   Mail,
   ChevronRight,
   Star,
+  Loader2,
+  Briefcase,
+  Heart,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { navItems, type NavItemType } from "./navbar-items"
+
+// Add this array of all pages at the top of the file, after the imports and before the flattenNavItems function
+const allPages = [
+  // Main pages
+  { id: "home", title: "Home", href: "/", category: "Main" },
+  { id: "about", title: "About Us", href: "/about#company-profile", category: "Main" },
+  { id: "leadership", title: "Leadership", href: "/why-access/leadership", category: "Main" },
+  { id: "why-access", title: "Why Access Retail?", href: "/why-access/success-story", category: "Main" },
+  { id: "life-at-access", title: "Life @ Access Retail", href: "/why-access/life-in-access", category: "Main" },
+  { id: "careers", title: "Careers", href: "/why-access/career", category: "Main" },
+  { id: "contact", title: "Contact Us", href: "/contact", category: "Main" },
+
+  // About Us pages
+  { id: "company-profile", title: "Company Profile", href: "/about#company-profile", category: "About Us" },
+  { id: "vision-values", title: "Vision & Values", href: "/about/vision-values", category: "About Us" },
+  { id: "journey", title: "Our Journey", href: "/journey", category: "About Us" },
+
+  // Services pages
+  {
+    id: "retail-audit",
+    title: "Retail Audit Studies",
+    href: "/services/retail-audit-studies",
+    category: "Key Offerings",
+  },
+  { id: "retail-census", title: "Retail Census", href: "/services/retail-census", category: "Key Offerings" },
+  {
+    id: "merchandizing-audits",
+    title: "Merchandizing Audits",
+    href: "/services/merchandizing-audits",
+    category: "Key Offerings",
+  },
+  {
+    id: "trade-margin-studies",
+    title: "Trade Margin Studies",
+    href: "/services/trade-margin-studies",
+    category: "Key Offerings",
+  },
+  {
+    id: "asset-utilization",
+    title: "Asset Utilization Tracking",
+    href: "/services/asset-utilization-tracking",
+    category: "Key Offerings",
+  },
+
+  // Why Access pages
+  { id: "success-story", title: "Success Story", href: "/why-access/success-story", category: "Why Access Retail?" },
+  { id: "leadership-team", title: "Leadership Team", href: "/why-access/leadership", category: "Why Access Retail?" },
+  {
+    id: "life-in-access",
+    title: "Life in Access",
+    href: "/why-access/life-in-access",
+    category: "Life @ Access Retail",
+  },
+  { id: "career-opportunities", title: "Career Opportunities", href: "/why-access/career", category: "Careers" },
+]
+
+// Enhanced function to flatten nested navigation items for search
+// This now properly handles multiple levels of nesting and ensures all items are included
+const flattenNavItems = (
+  items: NavItemType[],
+  parentPath: string[] = [],
+): Array<{ id: string; title: string; href: string; category?: string; breadcrumb?: string }> => {
+  let result: Array<{ id: string; title: string; href: string; category?: string; breadcrumb?: string }> = []
+
+  items.forEach((item) => {
+    // Skip commented out items
+    if (item.href === "#" && !item.children) return
+
+    // Create breadcrumb path for better context in search results
+    const currentPath = [...parentPath]
+    if (item.title) currentPath.push(item.title)
+    const breadcrumb = currentPath.length > 1 ? currentPath.join(" > ") : undefined
+
+    // Add the current item if it has a valid href
+    if (item.href && item.href !== "#" && !item.comingSoon) {
+      result.push({
+        id: item.id,
+        title: item.title,
+        href: item.href,
+        category: currentPath.length > 1 ? currentPath[0] : "Main",
+        breadcrumb,
+      })
+    }
+
+    // Recursively process children with updated parent path
+    if (item.children) {
+      const childItems = flattenNavItems(item.children, currentPath)
+      result = [...result, ...childItems]
+
+      // For items like "Key Offerings", add them as a separate category
+      if (item.title === "Key Offerings") {
+        childItems.forEach((child) => {
+          child.category = "Key Offerings"
+        })
+      }
+    }
+  })
+
+  return result
+}
 
 export default function ModernNavbar() {
   const [scrolled, setScrolled] = useState(false)
@@ -31,6 +134,19 @@ export default function ModernNavbar() {
   const [expandedMobileItems, setExpandedMobileItems] = useState<string[]>([])
   const searchInputRef = useRef<HTMLInputElement>(null)
   const navbarRef = useRef<HTMLDivElement>(null)
+  const [showKeyOfferings, setShowKeyOfferings] = useState(false)
+
+  // Search state
+  const [searchQuery, setSearchQuery] = useState("")
+  const [searchResults, setSearchResults] = useState<
+    Array<{ id: string; title: string; href: string; category?: string; breadcrumb?: string }>
+  >([])
+  const [isSearching, setIsSearching] = useState(false)
+  // Replace the searchableItems initialization in the ModernNavbar component with this:
+  // Change from:
+  // const searchableItems = useRef(flattenNavItems(navItems))
+  // To:
+  const searchableItems = useRef([...allPages, ...flattenNavItems(navItems)])
 
   // Handle scroll effect
   useEffect(() => {
@@ -80,9 +196,100 @@ export default function ModernNavbar() {
     }
   }, [mobileMenuOpen])
 
+  // Handle ESC key to close search
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && searchOpen) {
+        setSearchOpen(false)
+      }
+
+      // Open search with Ctrl+K or Cmd+K
+      if ((e.ctrlKey || e.metaKey) && e.key === "k") {
+        e.preventDefault()
+        setSearchOpen(true)
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown)
+    return () => window.removeEventListener("keydown", handleKeyDown)
+  }, [searchOpen])
+
+  // Update the search functionality to search through all pages
+  // Replace the useEffect for search with this enhanced version:
+  // Find this useEffect:
+  // useEffect(() => {
+  //   const searchTimeout = setTimeout(() => {
+  //     if (searchQuery.trim() === "") {
+  //       setSearchResults([])
+  //       setIsSearching(false)
+  //       return
+  //     }
+
+  //     setIsSearching(true)
+
+  //     // Simulate a search delay for a more realistic experience
+  //     setTimeout(() => {
+  //       const query = searchQuery.toLowerCase()
+
+  //       // Enhanced search that checks both title and breadcrumb
+  //       const results = searchableItems.current.filter(
+  //         (item) =>
+  //           item.title.toLowerCase().includes(query) ||
+  //           (item.breadcrumb && item.breadcrumb.toLowerCase().includes(query)),
+  //       )
+
+  //       setSearchResults(results)
+  //       setIsSearching(false)
+  //     }, 300)
+  //   }, 200)
+
+  //   return () => clearTimeout(searchTimeout)
+  // }, [searchQuery])
+
+  // Replace with this enhanced version:
+  useEffect(() => {
+    const searchTimeout = setTimeout(() => {
+      if (searchQuery.trim() === "") {
+        setSearchResults([])
+        setIsSearching(false)
+        return
+      }
+
+      setIsSearching(true)
+
+      // Simulate a search delay for a more realistic experience
+      setTimeout(() => {
+        const query = searchQuery.toLowerCase()
+
+        // Enhanced search that checks title, breadcrumb, and category
+        const results = searchableItems.current.filter(
+          (item) =>
+            item.title.toLowerCase().includes(query) ||
+            (item.breadcrumb && item.breadcrumb.toLowerCase().includes(query)) ||
+            (item.category && item.category.toLowerCase().includes(query)),
+        )
+
+        // Remove duplicates based on href
+        const uniqueResults = Array.from(new Map(results.map((item) => [item.href, item])).values())
+
+        setSearchResults(uniqueResults)
+        setIsSearching(false)
+      }, 300)
+    }, 200)
+
+    return () => clearTimeout(searchTimeout)
+  }, [searchQuery])
+
   const toggleMobileMenu = () => setMobileMenuOpen(!mobileMenuOpen)
   const closeMobileMenu = () => setMobileMenuOpen(false)
-  const toggleSearch = () => setSearchOpen(!searchOpen)
+  const toggleSearch = () => {
+    setSearchOpen(!searchOpen)
+    if (!searchOpen) {
+      setSearchQuery("")
+      setSearchResults([])
+      setShowKeyOfferings(false)
+    }
+  }
 
   const handleDropdownToggle = (id: string) => {
     setActiveDropdown(activeDropdown === id ? null : id)
@@ -92,7 +299,10 @@ export default function ModernNavbar() {
     setExpandedMobileItems((prev) => (prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]))
   }
 
-  // Update the getIcon function to return larger icons
+  const handleKeyOfferingsClick = () => {
+    setShowKeyOfferings(true)
+    setSearchQuery("")
+  }
 
   // Get icon component based on icon name
   const getIcon = (iconName?: string) => {
@@ -111,11 +321,33 @@ export default function ModernNavbar() {
         return <FileText className="h-5 w-5" />
       case "mail":
         return <Mail className="h-5 w-5" />
-        
+      case "briefcase":
+        return <Briefcase className="h-5 w-5" />
+      case "careers":
+        return <Heart className="h-5 w-5" />
       default:
-        return null
+        return <Star className="h-5 w-5" /> // Default icon if none matches
     }
   }
+
+  // Enhanced grouping of search results by category
+  const groupedSearchResults = searchResults.reduce(
+    (acc, item) => {
+      const category = item.category || "Other"
+      if (!acc[category]) {
+        acc[category] = []
+      }
+      acc[category].push(item)
+      return acc
+    },
+    {} as Record<string, typeof searchResults>,
+  )
+
+  // Get all key offerings
+  const keyOfferings = navItems.find((item) => item.id === "services")?.children?.[0]?.children || []
+
+  // Get all main navigation items (excluding those with children)
+  const mainNavItems = navItems.filter((item) => item.href !== "#")
 
   // Render mobile menu items recursively
   const renderMobileMenuItems = (items: NavItemType[], level = 0) => {
@@ -298,16 +530,15 @@ export default function ModernNavbar() {
               </button>
 
               {/* Contact Button (Desktop) */}
-              
+
               <div className="hidden md:block ml-4">
-              <Link href="/contact">
-                <Button className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white rounded-full px-5 shadow-lg shadow-red-600/20 hover:shadow-red-600/40 transition-all duration-300 hover:translate-y-[-2px] relative overflow-hidden group">
-                  <span className="relative z-10">Contact Us</span>
-                  <span className="absolute inset-0 bg-gradient-to-r from-red-500 to-red-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-                </Button>
+                <Link href="/contact">
+                  <Button className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white rounded-full px-5 shadow-lg shadow-red-600/20 hover:shadow-red-600/40 transition-all duration-300 hover:translate-y-[-2px] relative overflow-hidden group">
+                    <span className="relative z-10">Contact Us</span>
+                    <span className="absolute inset-0 bg-gradient-to-r from-red-500 to-red-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                  </Button>
                 </Link>
               </div>
-           
 
               {/* Mobile Menu Button */}
               <button
@@ -322,7 +553,7 @@ export default function ModernNavbar() {
         </div>
       </header>
 
-      {/* Search Overlay */}
+      {/* Enhanced Search Overlay */}
       <AnimatePresence>
         {searchOpen && (
           <motion.div
@@ -330,15 +561,18 @@ export default function ModernNavbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-50 bg-blue-950/95 backdrop-blur-md flex items-start justify-center pt-20 px-4"
+            className="fixed inset-0 z-50 bg-blue-950/95 backdrop-blur-md flex flex-col items-start justify-start pt-20 px-4"
           >
-            <div className="w-full max-w-3xl">
+            <div className="w-full max-w-3xl mx-auto">
               <div className="relative">
+                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-blue-300/70 h-5 w-5" />
                 <input
                   ref={searchInputRef}
                   type="text"
-                  placeholder="Search..."
-                  className="w-full bg-white/10 border-2 border-blue-800/50 rounded-full py-3 px-6 pr-12 text-white placeholder:text-blue-300/50 focus:outline-none focus:border-blue-500"
+                  placeholder="Search pages, products, docs..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full bg-white/10 border-2 border-blue-800/50 rounded-full py-3 px-12 text-white placeholder:text-blue-300/50 focus:outline-none focus:border-blue-500"
                 />
                 <button
                   onClick={toggleSearch}
@@ -347,7 +581,210 @@ export default function ModernNavbar() {
                   <X className="h-5 w-5" />
                 </button>
               </div>
-              <div className="mt-4 text-center text-blue-300 text-sm">Press ESC to close</div>
+
+              <div className="mt-2 text-center text-blue-300/70 text-sm">
+                <kbd className="px-2 py-1 text-xs font-semibold text-blue-200 bg-blue-800/30 rounded-md">ESC</kbd> to
+                close or press{" "}
+                <kbd className="px-2 py-1 text-xs font-semibold text-blue-200 bg-blue-800/30 rounded-md">⌘K</kbd> to
+                search anytime
+              </div>
+
+              {/* Enhanced Search Results with Breadcrumbs */}
+              <div className="mt-6 overflow-y-auto max-h-[calc(100vh-180px)]">
+                {isSearching ? (
+                  <div className="flex items-center justify-center py-8">
+                    <Loader2 className="h-8 w-8 text-blue-400 animate-spin" />
+                  </div>
+                ) : searchQuery && searchResults.length === 0 ? (
+                  <div className="text-center py-8">
+                    <p className="text-blue-300 text-lg">No results found for "{searchQuery}"</p>
+                    <p className="text-blue-400/70 mt-2">Try a different search term</p>
+                  </div>
+                ) : searchQuery ? (
+                  <div className="space-y-6">
+                    {Object.entries(groupedSearchResults).map(([category, items]) => (
+                      <div key={category} className="space-y-2">
+                        <h3 className="text-blue-300 text-sm font-medium px-2">{category}</h3>
+                        <div className="bg-blue-900/20 rounded-xl overflow-hidden">
+                          {items.map((item) => (
+                            <Link
+                              key={item.id}
+                              href={item.href}
+                              onClick={() => setSearchOpen(false)}
+                              className="flex flex-col px-4 py-3 text-blue-100 hover:bg-blue-800/40 transition-colors border-b border-blue-800/30 last:border-0"
+                            >
+                              <div className="flex items-center justify-between">
+                                <p className="font-medium">{item.title}</p>
+                                <ChevronRight className="h-4 w-4 text-blue-400/70" />
+                              </div>
+                              {item.breadcrumb && <p className="text-xs text-blue-300/70 mt-1">{item.breadcrumb}</p>}
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : showKeyOfferings ? (
+                  <div className="space-y-6">
+                    {/* Main Navigation Links */}
+                    <div className="space-y-2">
+                      <h3 className="text-blue-300 text-sm font-medium px-2">Main Navigation</h3>
+                      <div className="bg-blue-900/20 rounded-xl overflow-hidden">
+                        {mainNavItems.map((item) => (
+                          <Link
+                            key={item.id}
+                            href={item.href}
+                            onClick={() => setSearchOpen(false)}
+                            className="flex items-center px-4 py-3 text-blue-100 hover:bg-blue-800/40 transition-colors border-b border-blue-800/30 last:border-0"
+                          >
+                            <div className="flex-1">
+                              <div className="flex items-center">
+                                {item.icon && <span className="mr-2 text-blue-300">{getIcon(item.icon)}</span>}
+                                <p className="font-medium">{item.title}</p>
+                              </div>
+                            </div>
+                            <ChevronRight className="h-4 w-4 text-blue-400/70" />
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Key Offerings */}
+                    <div className="space-y-2">
+                      <h3 className="text-blue-300 text-sm font-medium px-2">Key Offerings</h3>
+                      <div className="bg-blue-900/20 rounded-xl overflow-hidden">
+                        {keyOfferings.map((offering) => (
+                          <Link
+                            key={offering.id}
+                            href={offering.href}
+                            onClick={() => setSearchOpen(false)}
+                            className="flex items-center px-4 py-3 text-blue-100 hover:bg-blue-800/40 transition-colors border-b border-blue-800/30 last:border-0"
+                          >
+                            <div className="flex-1">
+                              <p className="font-medium">{offering.title}</p>
+                              <p className="text-xs text-blue-300/70 mt-0.5">
+                                What We Offer/Our Services &gt; Key Offerings &gt; {offering.title}
+                              </p>
+                            </div>
+                            <ChevronRight className="h-4 w-4 text-blue-400/70" />
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="space-y-6">
+                    {/* Update the Quick Links section to include more pages */}
+                    {/* Find the Quick Links section in the search overlay and replace it with this: */}
+                    <div className="space-y-2">
+                      <h3 className="text-blue-300 text-sm font-medium px-2">Quick Links</h3>
+                      <div className="bg-blue-900/20 rounded-xl overflow-hidden">
+                        <Link
+                          href="/"
+                          onClick={() => setSearchOpen(false)}
+                          className="flex items-center px-4 py-3 text-blue-100 hover:bg-blue-800/40 transition-colors border-b border-blue-800/30"
+                        >
+                          <div className="flex-1">
+                            <div className="flex items-center">
+                              <Home className="h-5 w-5 mr-2 text-blue-300" />
+                              <p className="font-medium">Home</p>
+                            </div>
+                          </div>
+                          <ChevronRight className="h-4 w-4 text-blue-400/70" />
+                        </Link>
+                        <Link
+                          href="/about#company-profile"
+                          onClick={() => setSearchOpen(false)}
+                          className="flex items-center px-4 py-3 text-blue-100 hover:bg-blue-800/40 transition-colors border-b border-blue-800/30"
+                        >
+                          <div className="flex-1">
+                            <div className="flex items-center">
+                              <Info className="h-5 w-5 mr-2 text-blue-300" />
+                              <p className="font-medium">About Us</p>
+                            </div>
+                          </div>
+                          <ChevronRight className="h-4 w-4 text-blue-400/70" />
+                        </Link>
+                        <Link
+                          href="/why-access/leadership"
+                          onClick={() => setSearchOpen(false)}
+                          className="flex items-center px-4 py-3 text-blue-100 hover:bg-blue-800/40 transition-colors border-b border-blue-800/30"
+                        >
+                          <div className="flex-1">
+                            <div className="flex items-center">
+                              <Award className="h-5 w-5 mr-2 text-blue-300" />
+                              <p className="font-medium">Leadership</p>
+                            </div>
+                          </div>
+                          <ChevronRight className="h-4 w-4 text-blue-400/70" />
+                        </Link>
+                        <Link
+                          href="/why-access/success-story"
+                          onClick={() => setSearchOpen(false)}
+                          className="flex items-center px-4 py-3 text-blue-100 hover:bg-blue-800/40 transition-colors border-b border-blue-800/30"
+                        >
+                          <div className="flex-1">
+                            <div className="flex items-center">
+                              <Heart className="h-5 w-5 mr-2 text-blue-300" />
+                              <p className="font-medium">Why Access Retail?</p>
+                            </div>
+                          </div>
+                          <ChevronRight className="h-4 w-4 text-blue-400/70" />
+                        </Link>
+                        <Link
+                          href="/why-access/life-in-access"
+                          onClick={() => setSearchOpen(false)}
+                          className="flex items-center px-4 py-3 text-blue-100 hover:bg-blue-800/40 transition-colors border-b border-blue-800/30"
+                        >
+                          <div className="flex-1">
+                            <div className="flex items-center">
+                              <Zap className="h-5 w-5 mr-2 text-blue-300" />
+                              <p className="font-medium">Life @ Access Retail</p>
+                            </div>
+                          </div>
+                          <ChevronRight className="h-4 w-4 text-blue-400/70" />
+                        </Link>
+                        <Link
+                          href="/why-access/career"
+                          onClick={() => setSearchOpen(false)}
+                          className="flex items-center px-4 py-3 text-blue-100 hover:bg-blue-800/40 transition-colors border-b border-blue-800/30"
+                        >
+                          <div className="flex-1">
+                            <div className="flex items-center">
+                              <Briefcase className="h-5 w-5 mr-2 text-blue-300" />
+                              <p className="font-medium">Careers</p>
+                            </div>
+                          </div>
+                          <ChevronRight className="h-4 w-4 text-blue-400/70" />
+                        </Link>
+                      </div>
+                    </div>
+
+                    {/* Add a new section for Popular Pages */}
+                    <div className="space-y-2 mt-6">
+                      <h3 className="text-blue-300 text-sm font-medium px-2">Popular Pages</h3>
+                      <div className="bg-blue-900/20 rounded-xl overflow-hidden">
+                        {keyOfferings.map((offering) => (
+                          <Link
+                            key={offering.id}
+                            href={offering.href}
+                            onClick={() => setSearchOpen(false)}
+                            className="flex items-center px-4 py-3 text-blue-100 hover:bg-blue-800/40 transition-colors border-b border-blue-800/30 last:border-0"
+                          >
+                            <div className="flex-1">
+                              <p className="font-medium">{offering.title}</p>
+                              <p className="text-xs text-blue-300/70 mt-0.5">
+                                What We Offer/Our Services &gt; Key Offerings &gt; {offering.title}
+                              </p>
+                            </div>
+                            <ChevronRight className="h-4 w-4 text-blue-400/70" />
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           </motion.div>
         )}
@@ -480,7 +917,7 @@ function DesktopDropdown({ items, parentId, setActiveDropdown }: DesktopDropdown
                                 New
                               </span>
                             ) : (
-                              <ChevronRight className="h-4 w-4 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-200" />
+                              <ChevronRight className="h-4 w-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200" />
                             )}
                           </Link>
                         ))}
@@ -517,4 +954,3 @@ function DesktopDropdown({ items, parentId, setActiveDropdown }: DesktopDropdown
     </motion.div>
   )
 }
-

@@ -4,7 +4,7 @@ import { useRef, useEffect, useState } from "react"
 import Script from "next/script"
 import { motion, useInView, AnimatePresence } from "framer-motion"
 import { Card, CardContent } from "@/components/ui/card"
-import { Lightbulb, Target, Award, Zap, Users, BarChart, Compass, Star, ChevronRight, ArrowRight } from "lucide-react"
+import { Lightbulb, Target, Zap, Users, Compass, Star, ChevronRight } from "lucide-react"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
 
@@ -209,7 +209,7 @@ export default function VisionValues() {
 
 function VisionHeader() {
   const ref = useRef(null)
-  const isInView = useInView(ref, { once: false, amount: 0.3 })
+  const isInView = useInView(ref, { once: true, threshold: 0.5 })
 
   return (
     <div ref={ref} className="text-center mb-16">
@@ -221,6 +221,7 @@ function VisionHeader() {
       />
 
       <motion.h2
+        id="evolution"
         initial={{ opacity: 0, y: 20 }}
         animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
         transition={{ duration: 0.7, delay: 0.2 }}
@@ -242,6 +243,7 @@ function VisionHeader() {
         transition={{ duration: 0.7, delay: 0.4 }}
         className="mt-6 text-blue-100 max-w-2xl mx-auto"
       >
+        Our journey of innovation and excellence in retail insights
       </motion.p>
     </div>
   )
@@ -263,14 +265,16 @@ function JourneyStory({ activeStory, setActiveStory }) {
       title: "Our Growth",
       content:
         "Over the years, we have developed custom-designed research solutions that deliver actionable insights to our clients, expanded our team to ~300 FTEs nationwide, and ensured client servicing par excellence.",
-      image: "https://images.pexels.com/photos/247599/pexels-photo-247599.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      image:
+        "https://images.pexels.com/photos/247599/pexels-photo-247599.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
       color: "red",
     },
     {
       title: "Our Future",
       content:
         "Looking ahead, we are committed to pushing boundaries, embracing new technologies & solutions, and further raising the bar for retail research excellence across the board.",
-      image: "https://images.pexels.com/photos/3192640/pexels-photo-3192640.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      image:
+        "https://images.pexels.com/photos/3192640/pexels-photo-3192640.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
       color: "blue",
     },
   ]
@@ -387,9 +391,6 @@ function VisionContent() {
   return (
     <div ref={ref} className="grid md:grid-cols-2 gap-8 md:gap-12 mb-20">
       {/* Vision Statement */}
-     
-
-     
     </div>
   )
 }
@@ -618,4 +619,3 @@ function ValueCard({ icon, title, description, story, color, isExpanded, onClick
     </Card>
   )
 }
-

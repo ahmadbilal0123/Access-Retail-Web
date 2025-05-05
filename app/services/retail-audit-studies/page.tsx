@@ -256,6 +256,12 @@ export default function RetailAuditStudiesPage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.3 }}
                 >
+                  <motion.div
+                  className="h-1 w-20 bg-gradient-to-r from-red-500 to-blue-500 mb-6 mx-auto md:mx-0"
+                  initial={{ width: 0 }}
+                  animate={{ width: 80 }}
+                  transition={{ duration: 1, delay: 0.3 }}
+                />
                   <span className="text-white">Retail</span>{" "}
                   <span className="bg-clip-text text-transparent bg-gradient-to-r from-red-500 to-red-600">
                     Audit Studies
@@ -278,18 +284,13 @@ export default function RetailAuditStudiesPage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.5 }}
                 >
+                  
                   <Link
-                    href="/contact"
+                    href="#overview"
                     className="inline-flex items-center px-6 py-3 rounded-lg bg-gradient-to-r from-red-600 to-red-700 text-white font-medium hover:from-red-700 hover:to-red-800 transition-all duration-300 shadow-lg shadow-red-600/20"
                   >
-                    Get Started
-                    <ChevronRight className="ml-2 h-4 w-4" />
-                  </Link>
-                  <Link
-                    href="#learn-more"
-                    className="inline-flex items-center px-6 py-3 rounded-lg bg-blue-900/20 text-white font-medium border border-blue-800/30 hover:bg-blue-800/30 transition-all duration-300"
-                  >
                     Learn More
+                    <ChevronRight className="ml-2 h-4 w-4" />
                   </Link>
                 </motion.div>
               </div>
@@ -353,9 +354,25 @@ export default function RetailAuditStudiesPage() {
               whileInView="visible"
               viewport={{ once: true }}
             >
-              <h2 className="text-3xl md:text-4xl font-bold text-blue-500 mb-4">
-                Key<span className=" text-white"> - Offerings</span>
-              </h2>
+              
+                        <motion.div
+                        className="h-1 w-20 bg-gradient-to-r from-red-500 to-blue-500 mx-auto mb-4"
+                        initial={{ width: 0 }}
+                        animate={{ width: 80 }}
+                        transition={{ duration: 1, delay: 0.3 }}
+                          />
+
+<h2 className="text-3xl md:text-4xl font-bold text-blue-500 mb-4 text-center">
+  Key<span className="text-white"> - Offerings</span>
+</h2>
+
+<motion.div
+  className="h-1 w-20 bg-gradient-to-r from-red-500 to-blue-500 mx-auto mt-4"
+  initial={{ width: 0 }}
+  animate={{ width: 80 }}
+  transition={{ duration: 1, delay: 0.5 }}
+/>
+
             </motion.div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">

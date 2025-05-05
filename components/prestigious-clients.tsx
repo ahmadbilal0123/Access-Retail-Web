@@ -10,7 +10,7 @@ export default function PrestigiousClients() {
 
   // Client logos data with industry categories
   const clients = [
-    { name: "Nestlé", industry: "FMCG", logo: "/nestle.png" },
+    { name: "Nestlé", industry: "Beverages", logo: "/nestle.png" },
     {
       name: "Nescafé",
       industry: "Beverages",
