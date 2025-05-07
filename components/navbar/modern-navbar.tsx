@@ -26,6 +26,8 @@ import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { navItems, type NavItemType } from "./navbar-items"
 
+// Add this at the top of the file with other imports
+// Add this hook inside the component, near the top with other state variables
 // Add this array of all pages at the top of the file, after the imports and before the flattenNavItems function
 const allPages = [
   // Main pages
@@ -135,6 +137,7 @@ export default function ModernNavbar() {
   const searchInputRef = useRef<HTMLInputElement>(null)
   const navbarRef = useRef<HTMLDivElement>(null)
   const [showKeyOfferings, setShowKeyOfferings] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
 
   // Search state
   const [searchQuery, setSearchQuery] = useState("")
@@ -305,28 +308,32 @@ export default function ModernNavbar() {
   }
 
   // Get icon component based on icon name
+  // Find the getIcon function and replace it with this:
+  // Get icon component based on icon name
   const getIcon = (iconName?: string) => {
+    const iconSize = isMobile ? "h-4 w-4" : "h-4 w-4 lg:h-5 lg:w-5"
+
     switch (iconName) {
       case "home":
-        return <Home className="h-5 w-5" />
+        return <Home className={iconSize} />
       case "info":
-        return <Info className="h-5 w-5" />
+        return <Info className={iconSize} />
       case "layers":
-        return <Layers className="h-5 w-5" />
+        return <Layers className={iconSize} />
       case "zap":
-        return <Zap className="h-5 w-5" />
+        return <Zap className={iconSize} />
       case "award":
-        return <Award className="h-5 w-5" />
+        return <Award className={iconSize} />
       case "file-text":
-        return <FileText className="h-5 w-5" />
+        return <FileText className={iconSize} />
       case "mail":
-        return <Mail className="h-5 w-5" />
+        return <Mail className={iconSize} />
       case "briefcase":
-        return <Briefcase className="h-5 w-5" />
+        return <Briefcase className={iconSize} />
       case "careers":
-        return <Heart className="h-5 w-5" />
+        return <Heart className={iconSize} />
       default:
-        return <Star className="h-5 w-5" /> // Default icon if none matches
+        return <Star className={iconSize} /> // Default icon if none matches
     }
   }
 
@@ -352,27 +359,34 @@ export default function ModernNavbar() {
   // Render mobile menu items recursively
   const renderMobileMenuItems = (items: NavItemType[], level = 0) => {
     return items.map((item) => (
-      <div key={item.id} className={cn("w-full", level > 0 && "pl-4")}>
+      <div key={item.id} className={cn("w-full", level > 0 && "pl-2 sm:pl-4")}>
         {item.children ? (
           <div className="w-full">
+            {/* In the renderMobileMenuItems function, update the button element: */}
             <button
               onClick={() => toggleMobileExpand(item.id)}
               className={cn(
-                "flex items-center justify-between w-full py-3 px-4 text-left transition-all duration-300 rounded-lg",
-                level === 0 ? "text-white font-medium hover:bg-white/10" : "text-blue-100 text-sm hover:bg-blue-800/20",
+                "flex items-center justify-between w-full py-1.5 xs:py-2 sm:py-3 px-2 xs:px-3 sm:px-4 text-left transition-all duration-300 rounded-lg",
+                level === 0
+                  ? "text-white text-xs xs:text-sm font-medium hover:bg-white/10"
+                  : "text-blue-100 text-xs xs:text-sm hover:bg-blue-800/20",
                 expandedMobileItems.includes(item.id) && "bg-white/10",
               )}
             >
               <div className="flex items-center">
-                {level === 0 && item.icon && <span className="mr-3 text-blue-300">{getIcon(item.icon)}</span>}
+                {level === 0 && item.icon && (
+                  <span className="mr-1.5 xs:mr-2 sm:mr-3 text-blue-300">{getIcon(item.icon)}</span>
+                )}
                 <span>{item.title}</span>
                 {item.featured && (
-                  <span className="ml-2 text-[10px] px-1.5 py-0.5 rounded-full bg-red-600/80 text-white">New</span>
+                  <span className="ml-1 xs:ml-2 text-[8px] xs:text-[10px] px-1 xs:px-1.5 py-0.5 rounded-full bg-red-600/80 text-white">
+                    New
+                  </span>
                 )}
               </div>
               <ChevronDown
                 className={cn(
-                  "h-4 w-4 transition-transform duration-200",
+                  "h-3 w-3 xs:h-4 xs:w-4 transition-transform duration-200",
                   expandedMobileItems.includes(item.id) && "rotate-180",
                 )}
               />
@@ -406,28 +420,143 @@ export default function ModernNavbar() {
             <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-blue-800/50 text-blue-300">Soon</span>
           </div>
         ) : (
+          // And update the Link element:
           <Link
             href={item.href}
             className={cn(
-              "flex items-center justify-between py-3 px-4 rounded-lg transition-all duration-300",
-              level === 0 ? "text-white font-medium hover:bg-white/10" : "text-blue-100 text-sm hover:bg-blue-800/20",
+              "flex items-center justify-between py-1.5 xs:py-2 sm:py-3 px-2 xs:px-3 sm:px-4 rounded-lg transition-all duration-300",
+              level === 0
+                ? "text-white text-xs xs:text-sm font-medium hover:bg-white/10"
+                : "text-blue-100 text-xs xs:text-sm hover:bg-blue-800/20",
               item.featured && "text-red-300",
             )}
             onClick={closeMobileMenu}
           >
             <div className="flex items-center">
-              {level === 0 && item.icon && <span className="mr-3 text-blue-300">{getIcon(item.icon)}</span>}
+              {level === 0 && item.icon && (
+                <span className="mr-1.5 xs:mr-2 sm:mr-3 text-blue-300">{getIcon(item.icon)}</span>
+              )}
               <span>{item.title}</span>
               {item.featured && (
-                <span className="ml-2 text-[10px] px-1.5 py-0.5 rounded-full bg-red-600/80 text-white">New</span>
+                <span className="ml-1 xs:ml-2 text-[8px] xs:text-[10px] px-1 xs:px-1.5 py-0.5 rounded-full bg-red-600/80 text-white">
+                  New
+                </span>
               )}
             </div>
-            <ChevronRight className="h-4 w-4 opacity-50" />
+            <ChevronRight className="h-3 w-3 xs:h-4 xs:w-4 opacity-50" />
           </Link>
         )}
       </div>
     ))
   }
+
+  // Update the breakpoint handling to fix the 1024px issue
+  // Find the useEffect for isMobile and replace it with this improved version:
+
+  useEffect(() => {
+    const checkIfMobile = () => {
+      // Use 1025px instead of 1024px to ensure proper transition
+      setIsMobile(window.innerWidth <= 1024)
+    }
+
+    // Initial check
+    checkIfMobile()
+
+    // Add event listener with debounce for better performance
+    let resizeTimer: NodeJS.Timeout
+    const handleResize = () => {
+      clearTimeout(resizeTimer)
+      resizeTimer = setTimeout(() => {
+        checkIfMobile()
+      }, 100)
+    }
+
+    window.addEventListener("resize", handleResize)
+
+    // Cleanup
+    return () => {
+      window.removeEventListener("resize", handleResize)
+      clearTimeout(resizeTimer)
+    }
+  }, [])
+
+  // Update the responsive behavior useEffect
+  useEffect(() => {
+    const handleResize = () => {
+      const isMobileView = window.innerWidth <= 1024
+
+      // Close mobile menu when switching to desktop
+      if (!isMobileView && mobileMenuOpen) {
+        setMobileMenuOpen(false)
+      }
+
+      // Close any open dropdowns when switching to mobile
+      if (isMobileView && activeDropdown) {
+        setActiveDropdown(null)
+      }
+    }
+
+    window.addEventListener("resize", handleResize)
+    // Initial check
+    handleResize()
+
+    return () => window.removeEventListener("resize", handleResize)
+  }, [activeDropdown, mobileMenuOpen])
+
+  // Handle responsive behavior
+  // useEffect(() => {
+  //   const handleResize = () => {
+  //     const isMobileView = window.innerWidth < 1024
+  //     // Close any open dropdowns when switching to mobile
+  //     if (isMobileView && activeDropdown) {
+  //       setActiveDropdown(null)
+  //     }
+  //   }
+
+  //   window.addEventListener("resize", handleResize)
+  //   // Initial check
+  //   handleResize()
+
+  //   return () => window.removeEventListener("resize", handleResize)
+  // }, [activeDropdown])
+
+  // Add a new useEffect to handle more granular screen size detection
+  useEffect(() => {
+    const handleScreenSizeChange = () => {
+      // More granular screen size detection
+      const screenWidth = window.innerWidth
+      document.documentElement.style.setProperty("--screen-width", `${screenWidth}px`)
+
+      // Add classes to body based on screen size for more specific targeting
+      if (screenWidth < 480) {
+        document.body.classList.add("xs-screen")
+        document.body.classList.remove("sm-screen", "md-screen", "lg-screen", "xl-screen")
+      } else if (screenWidth < 640) {
+        document.body.classList.add("sm-screen")
+        document.body.classList.remove("xs-screen", "md-screen", "lg-screen", "xl-screen")
+      } else if (screenWidth < 768) {
+        document.body.classList.add("md-screen")
+        document.body.classList.remove("xs-screen", "sm-screen", "lg-screen", "xl-screen")
+      } else if (screenWidth < 1024) {
+        document.body.classList.add("lg-screen")
+        document.body.classList.remove("xs-screen", "sm-screen", "md-screen", "xl-screen")
+      } else {
+        document.body.classList.add("xl-screen")
+        document.body.classList.remove("xs-screen", "sm-screen", "md-screen", "lg-screen")
+      }
+    }
+
+    // Initial call
+    handleScreenSizeChange()
+
+    // Add event listener
+    window.addEventListener("resize", handleScreenSizeChange)
+
+    // Cleanup
+    return () => {
+      window.removeEventListener("resize", handleScreenSizeChange)
+    }
+  }, [])
 
   return (
     <div ref={navbarRef}>
@@ -435,15 +564,15 @@ export default function ModernNavbar() {
       <header
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-          scrolled ? "bg-blue-950/90 backdrop-blur-md py-2 shadow-lg shadow-blue-900/50" : "bg-transparent py-4",
+          scrolled ? "bg-blue-950/90 backdrop-blur-md py-1 shadow-lg shadow-blue-900/50" : "bg-transparent py-2",
         )}
       >
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="flex items-center h-16 md:h-20">
+        <div className="container mx-auto px-2 sm:px-4 md:px-6 lg:px-4 xl:px-8">
+          <div className="flex items-center h-14 md:h-16">
             {/* Logo */}
             <div className="flex-shrink-0 relative group mr-auto">
               <Link href="/" className="flex items-center">
-                <div className="relative h-8 w-32 md:h-10 md:w-40 transition-transform duration-300 group-hover:scale-105">
+                <div className="relative h-6 w-24 sm:h-7 sm:w-28 md:h-8 md:w-32 transition-transform duration-300 group-hover:scale-105">
                   <Image
                     src="https://www.accessretailpk.com/wp-content/uploads/2024/03/AR-logo01-trasparent.png"
                     alt="Access Retail Logo"
@@ -455,15 +584,24 @@ export default function ModernNavbar() {
               </Link>
             </div>
 
+            {/* Mobile Menu Button - Show earlier on smaller screens */}
+            <button
+              onClick={toggleMobileMenu}
+              className="ml-2 p-2 lg:hidden text-blue-100 hover:text-white rounded-full hover:bg-white/5 transition-colors"
+              aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+            >
+              {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </button>
+
             {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center space-x-1 whitespace-nowrap  text-sm">
+            <nav className="hidden lg:flex items-center space-x-0.5 xl:space-x-1 whitespace-nowrap text-xs sm:text-sm">
               {navItems.map((item) => (
                 <div key={item.id} className="relative group">
                   {item.children ? (
                     <button
                       onClick={() => handleDropdownToggle(item.id)}
                       className={cn(
-                        "flex items-center px-4 py-2.5 text-sm font-medium rounded-lg transition-all duration-300",
+                        "flex items-center px-1 lg:px-1.5 xl:px-3 py-1.5 lg:py-2 text-xs lg:text-sm font-medium rounded-lg transition-all duration-300",
                         activeDropdown === item.id
                           ? "bg-white/10 text-white"
                           : "text-blue-100 hover:text-white hover:bg-white/5",
@@ -472,7 +610,7 @@ export default function ModernNavbar() {
                       {item.icon && (
                         <span
                           className={cn(
-                            "mr-2 transition-transform duration-300",
+                            "mr-0.5 lg:mr-1 xl:mr-2 transition-transform duration-300",
                             activeDropdown === item.id ? "text-white" : "text-blue-300 group-hover:text-white",
                             "group-hover:scale-110",
                           )}
@@ -480,13 +618,13 @@ export default function ModernNavbar() {
                           {getIcon(item.icon)}
                         </span>
                       )}
-                      <span className="relative">
+                      <span className="relative truncate max-w-[40px] lg:max-w-[70px] xl:max-w-none">
                         {item.title}
                         <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-red-500 to-blue-500 group-hover:w-full transition-all duration-300"></span>
                       </span>
                       <ChevronDown
                         className={cn(
-                          "ml-1.5 h-4 w-4 transition-transform duration-300",
+                          "ml-0.5 lg:ml-1 h-3 w-3 lg:h-4 lg:w-4 transition-transform duration-300",
                           activeDropdown === item.id && "rotate-180",
                         )}
                       />
@@ -494,14 +632,14 @@ export default function ModernNavbar() {
                   ) : (
                     <Link
                       href={item.href}
-                      className="flex items-center px-4 py-2.5 text-sm font-medium rounded-lg text-blue-100 hover:text-white hover:bg-white/5 transition-all duration-300 group"
+                      className="flex items-center px-1 lg:px-1.5 xl:px-3 py-1.5 lg:py-2 text-xs lg:text-sm font-medium rounded-lg text-blue-100 hover:text-white hover:bg-white/5 transition-all duration-300 group"
                     >
                       {item.icon && (
-                        <span className="mr-2 text-blue-300 group-hover:text-white transition-colors duration-300 group-hover:scale-110 transition-transform">
+                        <span className="mr-0.5 lg:mr-1 xl:mr-2 text-blue-300 group-hover:text-white transition-colors duration-300 group-hover:scale-110 transition-transform">
                           {getIcon(item.icon)}
                         </span>
                       )}
-                      <span className="relative">
+                      <span className="relative truncate max-w-[40px] lg:max-w-[70px] xl:max-w-none">
                         {item.title}
                         <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-red-500 to-blue-500 group-hover:w-full transition-all duration-300"></span>
                       </span>
@@ -530,24 +668,14 @@ export default function ModernNavbar() {
               </button>
 
               {/* Contact Button (Desktop) */}
-
               <div className="hidden md:block ml-4">
                 <Link href="/contact">
-                  <Button className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white rounded-full px-5 shadow-lg shadow-red-600/20 hover:shadow-red-600/40 transition-all duration-300 hover:translate-y-[-2px] relative overflow-hidden group">
+                  <Button className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white rounded-full px-4 shadow-lg shadow-red-600/20 hover:shadow-red-600/40 transition-all duration-300 hover:translate-y-[-2px] relative overflow-hidden group">
                     <span className="relative z-10">Contact Us</span>
                     <span className="absolute inset-0 bg-gradient-to-r from-red-500 to-red-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
                   </Button>
                 </Link>
               </div>
-
-              {/* Mobile Menu Button */}
-              <button
-                onClick={toggleMobileMenu}
-                className="ml-4 p-2 lg:hidden text-blue-100 hover:text-white rounded-full hover:bg-white/5 transition-colors"
-                aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-              >
-                {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-              </button>
             </div>
           </div>
         </div>
@@ -563,22 +691,22 @@ export default function ModernNavbar() {
             transition={{ duration: 0.2 }}
             className="fixed inset-0 z-50 bg-blue-950/95 backdrop-blur-md flex flex-col items-start justify-start pt-20 px-4"
           >
-            <div className="w-full max-w-3xl mx-auto">
+            <div className="w-full max-w-3xl mx-auto px-2 sm:px-0">
               <div className="relative">
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-blue-300/70 h-5 w-5" />
+                <Search className="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 text-blue-300/70 h-4 sm:h-5 w-4 sm:w-5" />
                 <input
                   ref={searchInputRef}
                   type="text"
                   placeholder="Search pages, products, docs..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-white/10 border-2 border-blue-800/50 rounded-full py-3 px-12 text-white placeholder:text-blue-300/50 focus:outline-none focus:border-blue-500"
+                  className="w-full bg-white/10 border-2 border-blue-800/50 rounded-full py-2 sm:py-3 px-10 sm:px-12 text-white placeholder:text-blue-300/50 focus:outline-none focus:border-blue-500 text-sm sm:text-base"
                 />
                 <button
                   onClick={toggleSearch}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-blue-300 hover:text-white p-1"
+                  className="absolute right-2 sm:right-3 top-1/2 transform -translate-y-1/2 text-blue-300 hover:text-white p-1"
                 >
-                  <X className="h-5 w-5" />
+                  <X className="h-4 sm:h-5 w-4 sm:w-5" />
                 </button>
               </div>
 
@@ -590,34 +718,38 @@ export default function ModernNavbar() {
               </div>
 
               {/* Enhanced Search Results with Breadcrumbs */}
-              <div className="mt-6 overflow-y-auto max-h-[calc(100vh-180px)]">
+              <div className="mt-6 overflow-y-auto max-h-[calc(100vh-140px)] sm:max-h-[calc(100vh-180px)]">
                 {isSearching ? (
-                  <div className="flex items-center justify-center py-8">
-                    <Loader2 className="h-8 w-8 text-blue-400 animate-spin" />
+                  <div className="flex items-center justify-center py-6 sm:py-8">
+                    <Loader2 className="h-6 w-6 sm:h-8 sm:w-8 text-blue-400 animate-spin" />
                   </div>
                 ) : searchQuery && searchResults.length === 0 ? (
-                  <div className="text-center py-8">
-                    <p className="text-blue-300 text-lg">No results found for "{searchQuery}"</p>
-                    <p className="text-blue-400/70 mt-2">Try a different search term</p>
+                  <div className="text-center py-6 sm:py-8">
+                    <p className="text-blue-300 text-base sm:text-lg">No results found for "{searchQuery}"</p>
+                    <p className="text-blue-400/70 mt-2 text-sm sm:text-base">Try a different search term</p>
                   </div>
                 ) : searchQuery ? (
-                  <div className="space-y-6">
+                  <div className="space-y-4 sm:space-y-6">
                     {Object.entries(groupedSearchResults).map(([category, items]) => (
-                      <div key={category} className="space-y-2">
-                        <h3 className="text-blue-300 text-sm font-medium px-2">{category}</h3>
+                      <div key={category} className="space-y-1 sm:space-y-2">
+                        <h3 className="text-blue-300 text-xs sm:text-sm font-medium px-2">{category}</h3>
                         <div className="bg-blue-900/20 rounded-xl overflow-hidden">
                           {items.map((item) => (
                             <Link
                               key={item.id}
                               href={item.href}
                               onClick={() => setSearchOpen(false)}
-                              className="flex flex-col px-4 py-3 text-blue-100 hover:bg-blue-800/40 transition-colors border-b border-blue-800/30 last:border-0"
+                              className="flex flex-col px-3 sm:px-4 py-2 sm:py-3 text-blue-100 hover:bg-blue-800/40 transition-colors border-b border-blue-800/30 last:border-0"
                             >
                               <div className="flex items-center justify-between">
-                                <p className="font-medium">{item.title}</p>
-                                <ChevronRight className="h-4 w-4 text-blue-400/70" />
+                                <p className="font-medium text-sm sm:text-base">{item.title}</p>
+                                <ChevronRight className="h-3 sm:h-4 w-3 sm:w-4 text-blue-400/70" />
                               </div>
-                              {item.breadcrumb && <p className="text-xs text-blue-300/70 mt-1">{item.breadcrumb}</p>}
+                              {item.breadcrumb && (
+                                <p className="text-[10px] sm:text-xs text-blue-300/70 mt-0.5 sm:mt-1">
+                                  {item.breadcrumb}
+                                </p>
+                              )}
                             </Link>
                           ))}
                         </div>
@@ -800,15 +932,17 @@ export default function ModernNavbar() {
             transition={{ duration: 0.2 }}
             className="fixed inset-0 z-40 lg:hidden bg-blue-950/95 backdrop-blur-md pt-16 overflow-y-auto"
           >
-            <div className="container mx-auto px-4 py-6 space-y-6">
+            <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-6 space-y-4 sm:space-y-6">
               {/* Mobile Navigation */}
-              <div className="space-y-1">{renderMobileMenuItems(navItems)}</div>
+              <div className="space-y-0.5 sm:space-y-1">{renderMobileMenuItems(navItems)}</div>
 
               {/* Mobile Contact Button */}
-              <div className="pt-6 border-t border-blue-800/30">
-                <Button className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white rounded-full py-6 shadow-lg shadow-red-600/20 hover:shadow-red-600/40 transition-all duration-300">
-                  Contact Us
-                </Button>
+              <div className="pt-4 sm:pt-6 border-t border-blue-800/30">
+                <Link href="/contact">
+                  <Button className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white rounded-full py-3 sm:py-4 shadow-lg shadow-red-600/20 hover:shadow-red-600/40 transition-all duration-300 text-sm sm:text-base">
+                    Contact Us
+                  </Button>
+                </Link>
               </div>
             </div>
           </motion.div>
@@ -858,6 +992,9 @@ function DesktopDropdown({ items, parentId, setActiveDropdown }: DesktopDropdown
     }
   }, [activeSubmenu])
 
+  // Update the DesktopDropdown component to handle the 1024px breakpoint better
+  // Find the DesktopDropdown return statement and replace with:
+
   return (
     <motion.div
       ref={dropdownRef}
@@ -865,10 +1002,10 @@ function DesktopDropdown({ items, parentId, setActiveDropdown }: DesktopDropdown
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 10 }}
       transition={{ duration: 0.2 }}
-      className="absolute top-full left-0 mt-2 bg-blue-950/95 backdrop-blur-md border border-blue-800/50 rounded-xl shadow-xl z-50 w-[280px] md:w-auto"
+      className="absolute top-full left-0 mt-2 bg-blue-950/95 backdrop-blur-md border border-blue-800/50 rounded-xl shadow-xl z-50 w-[250px] lg:w-[280px]"
     >
-      <div className="p-4 min-w-[280px] max-w-[600px]">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+      <div className="p-2 min-w-[250px] lg:min-w-[280px] max-w-[600px]">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-1">
           {items.map((item) => (
             <div
               key={item.id}
@@ -878,18 +1015,19 @@ function DesktopDropdown({ items, parentId, setActiveDropdown }: DesktopDropdown
             >
               {item.children ? (
                 <div className="relative">
+                  {/* In the DesktopDropdown component, update the button and link elements: */}
                   <button
                     className={cn(
-                      "flex items-center justify-between w-full px-4 py-2.5 text-sm text-blue-100 hover:bg-blue-800/30 hover:text-white transition-all duration-200 rounded-lg group",
+                      "flex items-center justify-between w-full px-2 xs:px-3 py-1.5 xs:py-2 text-xs lg:text-sm text-blue-100 hover:bg-blue-800/30 hover:text-white transition-all duration-200 rounded-lg group",
                       item.featured && "text-red-300 hover:text-red-200",
                       activeSubmenu === item.id && "bg-blue-800/30 text-white",
                     )}
                   >
                     <span className="font-medium">{item.title}</span>
-                    <ChevronRight className="h-4 w-4 opacity-70 group-hover:translate-x-1 transition-transform duration-200" />
+                    <ChevronRight className="h-3 w-3 xs:h-3.5 xs:w-3.5 lg:h-4 lg:w-4 opacity-70 group-hover:translate-x-1 transition-transform duration-200" />
 
                     {item.featured && (
-                      <span className="absolute right-10 top-2 text-[10px] px-1.5 py-0.5 rounded-full bg-red-600/80 text-white">
+                      <span className="absolute right-7 xs:right-8 top-1.5 xs:top-2 text-[7px] xs:text-[8px] lg:text-[10px] px-1 lg:px-1.5 py-0.5 rounded-full bg-red-600/80 text-white">
                         New
                       </span>
                     )}
@@ -898,7 +1036,7 @@ function DesktopDropdown({ items, parentId, setActiveDropdown }: DesktopDropdown
                   {activeSubmenu === item.id && (
                     <div
                       ref={(el) => el && submenuRefs.current.set(item.id, el)}
-                      className="absolute top-0 left-full bg-blue-950/95 backdrop-blur-md border border-blue-800/50 rounded-xl shadow-xl overflow-hidden min-w-[220px] z-20"
+                      className="absolute top-0 left-full bg-blue-950/95 backdrop-blur-md border border-blue-800/50 rounded-xl shadow-xl overflow-hidden min-w-[200px] lg:min-w-[220px] z-20"
                     >
                       <div className="p-2">
                         {item.children.map((subItem) => (
@@ -906,18 +1044,18 @@ function DesktopDropdown({ items, parentId, setActiveDropdown }: DesktopDropdown
                             key={subItem.id}
                             href={subItem.href}
                             className={cn(
-                              "flex items-center justify-between px-4 py-2.5 text-sm text-blue-100 hover:bg-blue-800/30 hover:text-white transition-all duration-200 rounded-lg block group",
+                              "flex items-center justify-between px-3 py-2 text-xs lg:text-sm text-blue-100 hover:bg-blue-800/30 hover:text-white transition-all duration-200 rounded-lg block group",
                               subItem.featured && "text-red-300 hover:text-red-200",
                             )}
                             onClick={() => setActiveDropdown(null)}
                           >
                             <span className="font-medium">{subItem.title}</span>
                             {subItem.featured ? (
-                              <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-red-600/80 text-white ml-2">
+                              <span className="text-[8px] lg:text-[10px] px-1 lg:px-1.5 py-0.5 rounded-full bg-red-600/80 text-white ml-2">
                                 New
                               </span>
                             ) : (
-                              <ChevronRight className="h-4 w-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200" />
+                              <ChevronRight className="h-3 lg:h-4 w-3 lg:w-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200" />
                             )}
                           </Link>
                         ))}
@@ -926,24 +1064,26 @@ function DesktopDropdown({ items, parentId, setActiveDropdown }: DesktopDropdown
                   )}
                 </div>
               ) : item.comingSoon ? (
-                <div className="flex items-center justify-between px-4 py-2.5 text-sm text-blue-300/70 cursor-not-allowed rounded-lg">
+                <div className="flex items-center justify-between px-3 py-2 text-xs lg:text-sm text-blue-300/70 cursor-not-allowed rounded-lg">
                   <span className="font-medium">{item.title}</span>
-                  <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-blue-800/50 text-blue-300">Soon</span>
+                  <span className="text-[8px] lg:text-[10px] px-1 lg:px-1.5 py-0.5 rounded-full bg-blue-800/50 text-blue-300">
+                    Soon
+                  </span>
                 </div>
               ) : (
                 <Link
                   href={item.href}
                   className={cn(
-                    "flex items-center justify-between px-4 py-2.5 text-sm text-blue-100 hover:bg-blue-800/30 hover:text-white transition-all duration-200 rounded-lg group",
+                    "flex items-center justify-between px-3 py-2 text-xs lg:text-sm text-blue-100 hover:bg-blue-800/30 hover:text-white transition-all duration-200 rounded-lg group",
                     item.featured && "text-red-300 hover:text-red-200",
                   )}
                   onClick={() => setActiveDropdown(null)}
                 >
                   <span className="font-medium">{item.title}</span>
                   {item.featured ? (
-                    <Star className="h-4 w-4 text-red-400 group-hover:scale-110 transition-transform duration-200" />
+                    <Star className="h-3 lg:h-4 w-3 lg:w-4 text-red-400 group-hover:scale-110 transition-transform duration-200" />
                   ) : (
-                    <ChevronRight className="h-4 w-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200" />
+                    <ChevronRight className="h-3 lg:h-4 w-3 lg:w-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200" />
                   )}
                 </Link>
               )}

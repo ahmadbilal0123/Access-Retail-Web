@@ -101,19 +101,19 @@ export default function MobileMenu({ navItems, closeMenu }: MobileMenuProps) {
       </div>
 
       {/* Mobile menu content */}
-      <div className="px-6 py-8 flex-1 overflow-y-auto">
-        <div className="space-y-1">{renderMenuItems(navItems)}</div>
+      <div className="px-3 sm:px-6 py-4 sm:py-6 flex-1 overflow-y-auto">
+        <div className="space-y-4 sm:space-y-6">{renderMenuItems(navItems)}</div>
       </div>
 
       {/* Contact button in mobile menu */}
-      <div className="p-6 border-t border-blue-800/30">
+      <div className="p-4 sm:p-6 border-t border-blue-800/30">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
         >
           <Button
-            className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white rounded-full py-6 shadow-lg shadow-red-600/20 hover:shadow-red-600/40 transition-all duration-300"
+            className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white rounded-full py-4 sm:py-6 shadow-lg shadow-red-600/20 hover:shadow-red-600/40 transition-all duration-300"
             onClick={closeMenu}
           >
             Contact Us
@@ -128,4 +128,3 @@ export default function MobileMenu({ navItems, closeMenu }: MobileMenuProps) {
 function cn(...classes: (string | boolean | undefined)[]) {
   return classes.filter(Boolean).join(" ")
 }
-

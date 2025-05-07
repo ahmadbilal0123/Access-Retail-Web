@@ -19,7 +19,7 @@ export default function NavbarDropdown({ items }: NavbarDropdownProps) {
       exit={{ opacity: 0, y: 10, height: 0 }}
       transition={{ duration: 0.2 }}
     >
-      <div className="py-2 min-w-[220px]">
+      <div className="py-2 min-w-[220px] max-w-[90vw] sm:max-w-[300px]">
         {items.map((item, index) => (
           <div key={item.id} className="relative">
             {item.featured && (
@@ -36,7 +36,7 @@ export default function NavbarDropdown({ items }: NavbarDropdownProps) {
               <Link
                 href={item.href}
                 className={cn(
-                  "flex items-center justify-between px-4 py-2 text-sm text-blue-100 hover:bg-blue-800/30 hover:text-white transition-colors group",
+                  "flex items-center justify-between px-3 sm:px-4 py-2.5 text-sm text-blue-100 hover:bg-blue-800/30 hover:text-white transition-colors group",
                   item.featured && "text-red-300 hover:text-red-200",
                 )}
               >
@@ -50,4 +50,3 @@ export default function NavbarDropdown({ items }: NavbarDropdownProps) {
     </motion.div>
   )
 }
-

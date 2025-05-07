@@ -31,7 +31,7 @@ export default function MegaMenu({ items, parentId }: MegaMenuProps) {
       exit={{ opacity: 0, y: 10, height: 0 }}
       transition={{ duration: 0.2 }}
     >
-      <div className="py-2 grid grid-cols-1 md:grid-cols-2 gap-2 min-w-[280px] md:min-w-[560px]">
+      <div className="py-2 grid grid-cols-1 md:grid-cols-2 gap-1 sm:gap-2 min-w-[250px] sm:min-w-[280px] md:min-w-[560px]">
         <div className="col-span-1 md:col-span-2 px-4 py-2 border-b border-blue-800/30">
           <h3 className="text-sm font-medium text-blue-300">{parentId.charAt(0).toUpperCase() + parentId.slice(1)}</h3>
         </div>
@@ -47,7 +47,7 @@ export default function MegaMenu({ items, parentId }: MegaMenuProps) {
               <div className="relative">
                 <button
                   className={cn(
-                    "flex items-center justify-between w-full px-4 py-2 text-sm text-blue-100 hover:bg-blue-800/30 hover:text-white transition-colors rounded-md group",
+                    "flex items-center justify-between w-full px-3 sm:px-4 py-2.5 text-sm text-blue-100 hover:bg-blue-800/30 hover:text-white transition-colors rounded-md group",
                     item.featured && "text-red-300 hover:text-red-200",
                     activeSubmenu === item.id && "bg-blue-800/30 text-white",
                   )}
@@ -113,4 +113,3 @@ export default function MegaMenu({ items, parentId }: MegaMenuProps) {
     </motion.div>
   )
 }
-

@@ -49,7 +49,7 @@ export default function Navbar() {
         scrolled ? "bg-blue-950/90 backdrop-blur-md py-2 shadow-lg shadow-blue-900/50" : "bg-transparent py-4",
       )}
     >
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-2 sm:px-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <motion.div
@@ -130,7 +130,7 @@ export default function Navbar() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <Button className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white rounded-full px-6 shadow-lg shadow-red-600/20 hover:shadow-red-600/40 transition-all duration-300 hover:translate-y-[-2px]">
+            <Button className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white rounded-full px-4 sm:px-6 shadow-lg shadow-red-600/20 hover:shadow-red-600/40 transition-all duration-300 hover:translate-y-[-2px]">
               Contact
             </Button>
           </motion.div>
@@ -156,7 +156,7 @@ export default function Navbar() {
               </SheetTrigger>
               <SheetContent
                 side="right"
-                className="bg-gradient-to-b from-blue-950 to-blue-900 border-l border-blue-800/30 p-0 w-[300px] sm:w-[350px]"
+                className="bg-gradient-to-b from-blue-950 to-blue-900 border-l border-blue-800/30 p-0 w-[280px] sm:w-[300px] md:w-[350px]"
               >
                 <MobileMenu navItems={navItems} closeMenu={closeMenu} />
               </SheetContent>
@@ -167,4 +167,3 @@ export default function Navbar() {
     </header>
   )
 }
-
