@@ -287,7 +287,7 @@ export default function WhyAccessPage() {
         "A proven track record in setting up and managing nationwide audits/trackers, as well as mega census projects with capability to deploy 1,000+ surveyors at any given time.",
       color: "red",
       story:
-        "During the current (2024-25) Retail Census, we mobilized over 900 field agents across Pakistan with operation control from 70 districts in just two weeks, collecting data from more than 700,000 retail outlets to provide a comprehensive market snapshot.",
+        "During the current (2024-25) Retail Census, we mobilized over 900 field agents in just two weeks across Pakistan with operation control from 70 districts, collecting data from more than 700,000 retail outlets to provide a comprehensive market snapshot.",
       delay: 0.3,
     },
     {
@@ -298,7 +298,7 @@ export default function WhyAccessPage() {
         "We consistently deliver on time, leveraging an experienced field team and efficient data processing workflows.",
       color: "blue",
       story:
-        "When a beverage client needed urgent market insights before a product launch, our team worked round the clock to deliver a comprehensive retail audit across 15 cities in just 10 days—one half of the industry standard timeline.",
+        "When a beverage client needed urgent market insights before a product launch, our team worked round the clock to deliver a comprehensive retail studies across 15 cities in just 10 days—one half of the industry standard timeline.",
       delay: 0.4,
     },
     {
@@ -344,13 +344,7 @@ export default function WhyAccessPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <motion.div
-                className="w-20 h-1 bg-gradient-to-r from-red-500 to-blue-500 mx-auto mb-6"
-                initial={{ width: 0 }}
-                animate={{ width: 80 }}
-                transition={{ duration: 1, delay: 0.3 }}
-              />
-
+          
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6">
                 Why{" "}
                 <span className="bg-clip-text text-transparent bg-gradient-to-r from-red-500 to-red-600">Access</span>{" "}

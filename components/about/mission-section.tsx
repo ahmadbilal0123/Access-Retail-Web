@@ -14,7 +14,7 @@ export default function MissionSection() {
         <div className="grid md:grid-cols-2 gap-8 mb-16">
           {/* Target icon card */}
           <div className="bg-[#2a1e4a] rounded-lg p-8 flex items-center justify-center">
-            <div className="relative w-40 h-40">
+            <div className="relative w-40 h-40 ml-6">
               <div className="absolute inset-0 rounded-full border-4 border-red-500 opacity-30"></div>
               <div className="absolute inset-[15%] rounded-full border-4 border-red-500 opacity-60"></div>
               <div className="absolute inset-[30%] rounded-full border-4 border-red-500 opacity-80"></div>
@@ -64,6 +64,7 @@ export default function MissionSection() {
           </div>
         </div>
       </div>
+      
     </section>
   )
 }

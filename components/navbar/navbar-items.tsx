@@ -66,18 +66,18 @@ export const navItems: NavItemType[] = [
             href: "/services/retail-census",
           },
           {
-            id: "MERCHANDIZING AUDITS",
-            title: "MERCHANDIZING AUDITS",
+            id: "Merchandizing Audits",
+            title: "Merchandizing Audits",
             href: "/services/merchandizing-audits",
           },
           {
-            id: "TRADE MARGIN STUDIES",
-            title: "TRADE MARGIN STUDIES",
+            id: "Trade Margin Studies",
+            title: "Trade Margin Studies",
             href: "/services/trade-margin-studies",
           },
           {
-            id: "ASSET UTILIZATION TRACKING",
-            title: "ASSET UTILIZATION TRACKING",
+            id: "Asset Utilization Tracking",
+            title: "Asset Utilization Tracking",
             href: "/services/asset-utilization-tracking",
           },
         ],
@@ -166,18 +166,18 @@ export const navItems: NavItemType[] = [
     icon: "careers",
   },
 
-  {
-    id: "Life @ Access Retail",
-    title: "Life @ Access Retail",
-    href: "/why-access/life-in-access",
-    icon: "zap",
-  },
-  {
-    id: "Careers",
-    title: "Careers",
-    href: "/why-access/career",
-    icon: "briefcase",
+  // {
+  //   id: "Life @ Access Retail",
+  //   title: "Life @ Access Retail",
+  //   href: "/why-access/life-in-access",
+  //   icon: "zap",
+  // },
+  // {
+  //   id: "Careers",
+  //   title: "Careers",
+  //   href: "/why-access/career",
+  //   icon: "briefcase",
     
-  },
+  // },
 ]
 

@@ -54,7 +54,7 @@ export default function WhyAccessGroup() {
         "A proven track record in setting up and managing nationwide audits & trackers, capable of deploying 1,000+ surveyors at any time.",
       color: "red",
       story:
-        "During the current (2024-25) Retail Census, we mobilized over 900 field agents across Pakistan with operation control from 70 districts in just two weeks, collecting data from more than 700,000 retail outlets to provide a comprehensive market snapshot.",
+        "During the current (2024-25) Retail Census, we mobilized over 900 field agents in just two weeks across Pakistan with operation control from 70 districts, collecting data from more than 700,000 retail outlets to provide a comprehensive market snapshot.",
       delay: 0.3,
     },
     {

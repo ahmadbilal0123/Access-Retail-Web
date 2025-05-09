@@ -10,6 +10,8 @@ export default function MissionSection() {
   const isInView = useInView(ref, { once: true, amount: 0.2 })
 
   return (
+
+    
     <section  className="relative py-20 overflow-hidden bg-gradient-to-b from-blue-900 to-blue-950">
       {/* Background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -98,7 +100,7 @@ export default function MissionSection() {
                     <div className="absolute -top-10 -left-4 text-6xl text-red-500/20 font-serif">"</div>
                     <div className="absolute -bottom-10 -right-4 text-6xl text-red-500/20 font-serif">"</div>
 
-                    <p className="text-xl md:text-2xl text-blue-100 leading-relaxed italic">
+                    <p className="text-white text-lg lg:text-base md:text-lg italic px-4 sm:px-6 md:px-8 py-2 sm:py-4">
                       Build partnership with our clients by providing enhanced value to their marketing decision making.
                     </p>
                   </div>

@@ -10,29 +10,29 @@ export default function PrestigiousClients() {
 
   // Client logos data with industry categories
   const clients = [
-    { name: "Nestlé", industry: "Beverages", logo: "/nestle.png" },
+    { name: "", industry: "Beverages", logo: "/nestle.png" },
     {
-      name: "Nescafé",
+      name: "",
       industry: "Beverages",
       logo: "/nescafe.png",
     },
-    { name: "Coca-Cola", industry: "Beverages", logo: "https://static.vecteezy.com/system/resources/thumbnails/019/956/122/small/coca-cola-transparent-coca-cola-free-free-png.png" },
+    { name: "", industry: "Beverages", logo: "https://static.vecteezy.com/system/resources/thumbnails/019/956/122/small/coca-cola-transparent-coca-cola-free-free-png.png" },
     { name: "Pepsi", industry: "FMCG", logo: "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/59db847a-30b6-4f66-9044-ef0a0adf1544/d91pbas-dcfba8fa-bc4b-4e50-b62f-6233b4b01858.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzU5ZGI4NDdhLTMwYjYtNGY2Ni05MDQ0LWVmMGEwYWRmMTU0NFwvZDkxcGJhcy1kY2ZiYThmYS1iYzRiLTRlNTAtYjYyZi02MjMzYjRiMDE4NTgucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.XvE_tvU31Yru4pGvobfI-uEuPczEfuuX-3ywkbfTSuk" },
-    { name: "Unilever", industry: "FMCG", logo: "https://cdn.pixabay.com/photo/2021/10/26/12/17/unilever-6743502_1280.png" },
+    { name: "", industry: "FMCG", logo: "https://cdn.pixabay.com/photo/2021/10/26/12/17/unilever-6743502_1280.png" },
     { name: "P&G", industry: "FMCG", logo: "./p&g.png" },
     { name: "Engro", industry: "Conglomerate", logo: "https://mir-s3-cdn-cf.behance.net/projects/404/4ba83b187132161.Y3JvcCw4MDgsNjMyLDI0LDA.png" },
-    { name: "Jazz", industry: "Telecom", logo: "/jazz.png" },
+    { name: "", industry: "Telecom", logo: "/jazz.png" },
     { name: "Telenor", industry: "Telecom", logo: "https://upload.wikimedia.org/wikipedia/commons/6/60/Telenor_logo.svg" },
-    { name: "Zong", industry: "Telecom", logo: "./zong.png" },
-    { name: "Shan Foods", industry: "Food", logo: "/shan.png" },
-    { name: "Tapal", industry: "Beverages", logo: "/tapal.png" },
+    { name: "", industry: "Telecom", logo: "./zong.png" },
+    { name: "", industry: "Food", logo: "/shan.png" },
+    { name: "", industry: "Beverages", logo: "/tapal.png" },
     { name: "Colgate-Palmolive", industry: "FMCG", logo: "/colgate.png" },
-    { name: "National Foods", industry: "Food", logo: "/national.png" },
-    { name: "Ufone", industry: "Telecom", logo: "/ufone.png" },
-    { name: "Reckitt", industry: "FMCG", logo: "/reckitt.png" },
-    { name: "Mondelēz", industry: "Food", logo: "/mondelez.png" },
-    { name: "Mayfair", industry: "FMCG", logo: "/mayfair.png" },
-    { name: "Dalda", industry: "Food", logo: "/dalda.png" },
+    { name: "", industry: "Food", logo: "/national.png" },
+    { name: "", industry: "Telecom", logo: "/ufone.png" },
+    { name: "", industry: "FMCG", logo: "/reckitt.png" },
+    { name: "", industry: "Food", logo: "/mondelez.png" },
+    { name: "", industry: "FMCG", logo: "/mayfair.png" },
+    { name: "", industry: "Food", logo: "/dalda.png" },
   ]
 
   return (

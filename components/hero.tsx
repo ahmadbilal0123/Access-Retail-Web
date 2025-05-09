@@ -187,7 +187,7 @@ export default function Hero() {
       const counter = setInterval(() => {
         start += increment
         if (start >= end) {
-          if (counterRef.current) counterRef.current.textContent = "85+"
+          if (counterRef.current) counterRef.current.textContent = "85%"
           clearInterval(counter)
         } else {
           if (counterRef.current) counterRef.current.textContent = Math.floor(start) + "+"
@@ -396,8 +396,8 @@ export default function Hero() {
                 className="text-base sm:text-lg md:text-xl text-blue-100 leading-relaxed animate-hero animate-quick-fade"
                 style={{ animationDelay: "0.2s" }}
               >
-                We empower your Retail performance with Extensive Reporting Capability, and Cutting Edge Insights
-                Befitting your Information Needs
+We empower your retail performance with extensive reporting capability, and cutting edge insights befitting your information needs
+                
               </p>
 
               <div
@@ -488,7 +488,7 @@ export default function Hero() {
                         0+
                       </span>
                       <span ref={districtTextRef} className="text-sm text-blue-100 mt-1 opacity-0">
-                        Districts
+                        
                       </span>
                     </div>
                   </div>

@@ -533,7 +533,7 @@ export default function ModernNavbar() {
         document.body.classList.remove("sm-screen", "md-screen", "lg-screen", "xl-screen")
       } else if (screenWidth < 640) {
         document.body.classList.add("sm-screen")
-        document.body.classList.remove("xs-screen", "md-screen", "lg-screen", "xl-screen")
+        document.body.classList.remove("xs-screen", "sm-screen", "md-screen", "lg-screen", "xl-screen")
       } else if (screenWidth < 768) {
         document.body.classList.add("md-screen")
         document.body.classList.remove("xs-screen", "sm-screen", "lg-screen", "xl-screen")
@@ -567,8 +567,8 @@ export default function ModernNavbar() {
           scrolled ? "bg-blue-950/90 backdrop-blur-md py-1 shadow-lg shadow-blue-900/50" : "bg-transparent py-2",
         )}
       >
-        <div className="container mx-auto px-2 sm:px-4 md:px-6 lg:px-4 xl:px-8">
-          <div className="flex items-center h-14 md:h-16">
+        <div className="container mx-auto px-2 sm:px-4 md:px-6 lg:px-4 xl:px-8 flex justify-center">
+          <div className="flex items-center h-14 md:h-16 w-full max-w-7xl">
             {/* Logo */}
             <div className="flex-shrink-0 relative group mr-auto">
               <Link href="/" className="flex items-center">
@@ -680,7 +680,6 @@ export default function ModernNavbar() {
           </div>
         </div>
       </header>
-
       {/* Enhanced Search Overlay */}
       <AnimatePresence>
         {searchOpen && (
@@ -921,7 +920,7 @@ export default function ModernNavbar() {
           </motion.div>
         )}
       </AnimatePresence>
-
+     
       {/* Mobile Menu Overlay */}
       <AnimatePresence>
         {mobileMenuOpen && (
@@ -930,19 +929,165 @@ export default function ModernNavbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-40 lg:hidden bg-blue-950/95 backdrop-blur-md pt-16 overflow-y-auto"
+            className="fixed inset-0 z-40 lg:hidden bg-[#001333] pt-16 overflow-y-auto flex flex-col"
           >
-            <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-6 space-y-4 sm:space-y-6">
-              {/* Mobile Navigation */}
-              <div className="space-y-0.5 sm:space-y-1">{renderMobileMenuItems(navItems)}</div>
+            <div className="container mx-auto px-4 py-4 flex-1">
+              {/* Mobile Menu Header with Logo and Close Button */}
+              <div className="flex items-center justify-between mb-6 absolute top-4 left-0 right-0 px-4">
+                <div className="relative h-8 w-32">
+                  <Image
+                    src="https://www.accessretailpk.com/wp-content/uploads/2024/03/AR-logo01-trasparent.png"
+                    alt="Access Retail Logo"
+                    fill
+                    className="object-contain"
+                  />
+                </div>
+                <div className="flex items-center space-x-2">
+                  <button
+                    onClick={toggleSearch}
+                    className="p-2 text-blue-100 hover:text-white rounded-full hover:bg-white/5 transition-colors"
+                    aria-label="Search"
+                  >
+                    <Search className="h-5 w-5" />
+                  </button>
+                  <button
+                    onClick={toggleMobileMenu}
+                    className="p-2 text-blue-100 hover:text-white rounded-full hover:bg-white/5 transition-colors"
+                    aria-label="Close menu"
+                  >
+                    <X className="h-5 w-5" />
+                  </button>
+                </div>
+              </div>
 
-              {/* Mobile Contact Button */}
-              <div className="pt-4 sm:pt-6 border-t border-blue-800/30">
-                <Link href="/contact">
-                  <Button className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white rounded-full py-3 sm:py-4 shadow-lg shadow-red-600/20 hover:shadow-red-600/40 transition-all duration-300 text-sm sm:text-base">
-                    Contact Us
-                  </Button>
-                </Link>
+              {/* Mobile Navigation - Simplified and styled like the image */}
+              <div className="mt-8 space-y-1">
+                {navItems.map((item) => (
+                  <div key={item.id} className="w-full">
+                    {item.children ? (
+                      <div className="w-full">
+                        <button
+                          onClick={() => toggleMobileExpand(item.id)}
+                          className={cn(
+                            "flex items-center justify-between w-full py-3 px-4 text-left transition-all duration-300 rounded-lg",
+                            "text-white text-base font-medium hover:bg-blue-800/20",
+                            expandedMobileItems.includes(item.id) && "bg-blue-800/20 text-white",
+                          )}
+                        >
+                          <div className="flex items-center">
+                            {item.icon && <span className="mr-3 text-blue-300">{getIcon(item.icon)}</span>}
+                            <span>{item.title}</span>
+                          </div>
+                          <ChevronDown
+                            className={cn(
+                              "h-5 w-5 transition-transform duration-200",
+                              expandedMobileItems.includes(item.id) ? "rotate-180" : "",
+                            )}
+                          />
+                        </button>
+
+                        <AnimatePresence>
+                          {expandedMobileItems.includes(item.id) && (
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: "auto", opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={{ duration: 0.2 }}
+                              className="overflow-hidden mt-1 mb-1 ml-10 space-y-1"
+                            >
+                              {/* Find the section where you map through item.children in the mobile menu and update it: */}
+                              {item.children.map((subItem) => (
+                                <div key={subItem.id} className="w-full">
+                                  {subItem.children ? (
+                                    <div className="w-full">
+                                      <button
+                                        onClick={() => toggleMobileExpand(subItem.id)}
+                                        className={cn(
+                                          "flex items-center justify-between w-full py-2 px-4 text-left transition-all duration-300 rounded-lg",
+                                          "text-blue-100 text-base hover:bg-blue-800/20",
+                                          expandedMobileItems.includes(subItem.id) && "bg-blue-800/20 text-white",
+                                        )}
+                                      >
+                                        <span>{subItem.title}</span>
+                                        <ChevronDown
+                                          className={cn(
+                                            "h-4 w-4 transition-transform duration-200",
+                                            expandedMobileItems.includes(subItem.id) ? "rotate-180" : "",
+                                          )}
+                                        />
+                                      </button>
+
+                                      <AnimatePresence>
+                                        {expandedMobileItems.includes(subItem.id) && (
+                                          <motion.div
+                                            initial={{ height: 0, opacity: 0 }}
+                                            animate={{ height: "auto", opacity: 1 }}
+                                            exit={{ height: 0, opacity: 0 }}
+                                            transition={{ duration: 0.2 }}
+                                            className="overflow-hidden mt-1 mb-1 ml-4 space-y-1"
+                                          >
+                                            {subItem.children.map((grandChild) => (
+                                              <Link
+                                                key={grandChild.id}
+                                                href={grandChild.href}
+                                                className="flex items-center justify-between py-2 px-4 text-blue-100 hover:bg-blue-800/20 rounded-lg text-sm"
+                                                onClick={closeMobileMenu}
+                                              >
+                                                <span>{grandChild.title}</span>
+                                                <ChevronRight className="h-3 w-3 opacity-50" />
+                                              </Link>
+                                            ))}
+                                          </motion.div>
+                                        )}
+                                      </AnimatePresence>
+                                    </div>
+                                  ) : (
+                                    <Link
+                                      href={subItem.href}
+                                      className="flex items-center justify-between py-2 px-4 text-blue-100 hover:bg-blue-800/20 rounded-lg text-base"
+                                      onClick={closeMobileMenu}
+                                    >
+                                      <span>{subItem.title}</span>
+                                      <ChevronRight className="h-4 w-4 opacity-50" />
+                                    </Link>
+                                  )}
+                                </div>
+                              ))}
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    ) : (
+                      <Link
+                        href={item.href}
+                        className="flex items-center justify-between py-3 px-4 text-white text-base font-medium hover:bg-blue-800/20 rounded-lg w-full"
+                        onClick={closeMobileMenu}
+                      >
+                        <div className="flex items-center">
+                          {item.icon && <span className="mr-3 text-blue-300">{getIcon(item.icon)}</span>}
+                          <span>{item.title}</span>
+                        </div>
+                        <ChevronRight className="h-5 w-5 opacity-50" />
+                      </Link>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Contact Button at Bottom */}
+            <div className="mt-auto px-4 pb-6 pt-4">
+              <Link href="/contact" onClick={closeMobileMenu}>
+                <Button className="w-full bg-red-600 hover:bg-red-700 text-white rounded-full py-3 text-base font-medium">
+                  Contact Us
+                </Button>
+              </Link>
+            </div>
+
+            {/* User Avatar/Initial at Bottom */}
+            <div className="flex justify-center pb-6">
+              <div className="h-10 w-10 rounded-full bg-gray-800 flex items-center justify-center text-white font-bold">
+                N
               </div>
             </div>
           </motion.div>
@@ -964,8 +1109,11 @@ function DesktopDropdown({ items, parentId, setActiveDropdown }: DesktopDropdown
   const dropdownRef = useRef<HTMLDivElement>(null)
   const submenuRefs = useRef<Map<string, HTMLDivElement>>(new Map())
 
+  // Also, update the handleMouseEnter function in the DesktopDropdown component to toggle the submenu:
+  // Replace the handleMouseEnter function with:
+
   const handleMouseEnter = (id: string) => {
-    setActiveSubmenu(id)
+    setActiveSubmenu(activeSubmenu === id ? null : id)
   }
 
   const handleMouseLeave = () => {
@@ -1016,7 +1164,17 @@ function DesktopDropdown({ items, parentId, setActiveDropdown }: DesktopDropdown
               {item.children ? (
                 <div className="relative">
                   {/* In the DesktopDropdown component, update the button and link elements: */}
+                  {/* Find the DesktopDropdown component and update the button element to properly handle clicks:
+                  // In the DesktopDropdown component, replace the button element inside the item.children condition with: */}
+
                   <button
+                    onClick={(e) => {
+                      e.preventDefault()
+                      e.stopPropagation()
+                      if (item.children) {
+                        handleMouseEnter(item.id)
+                      }
+                    }}
                     className={cn(
                       "flex items-center justify-between w-full px-2 xs:px-3 py-1.5 xs:py-2 text-xs lg:text-sm text-blue-100 hover:bg-blue-800/30 hover:text-white transition-all duration-200 rounded-lg group",
                       item.featured && "text-red-300 hover:text-red-200",

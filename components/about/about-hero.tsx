@@ -159,43 +159,43 @@ export default function AboutHero() {
     }
   }, [pathname])
 
-  return (
-    <div className="relative min-h-[60vh] flex items-center" ref={containerRef} id="animation-container">
-      {/* Canvas Background */}
-      <canvas ref={canvasRef} className="absolute inset-0 z-0" style={{ backgroundColor: "#0a1d3b" }} />
+  // // return (
+  // //   <div className="relative min-h-[60vh] flex items-center" ref={containerRef} id="animation-container">
+  // //     {/* Canvas Background */}
+  // //     <canvas ref={canvasRef} className="absolute inset-0 z-0" style={{ backgroundColor: "#0a1d3b" }} />
 
-      {/* Dark Overlay with Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-blue-950/70 via-blue-900/60 to-blue-950/80 z-10"></div>
+  // //     {/* Dark Overlay with Gradient */}
+  // //     <div className="absolute inset-0 bg-gradient-to-b from-blue-950/70 via-blue-900/60 to-blue-950/80 z-10"></div>
 
-      {/* Content */}
-      <div className="container mx-auto px-4 z-20 pt-32 pb-20">
-        <div className="max-w-4xl mx-auto text-center">
-          <motion.div
-            initial={{ width: 0 }}
-            animate={{ width: "5rem" }}
-            transition={{ duration: 1, ease: "easeInOut" }}
-            className="h-1 bg-gradient-to-r from-red-500 to-blue-500 mx-auto mb-6"
-          />
+  // //     {/* Content */}
+  // //     <div className="container mx-auto px-4 z-20 pt-32 pb-20">
+  // //       <div className="max-w-4xl mx-auto text-center">
+  // //         <motion.div
+  // //           initial={{ width: 0 }}
+  // //           animate={{ width: "5rem" }}
+  // //           transition={{ duration: 1, ease: "easeInOut" }}
+  // //           className="h-1 bg-gradient-to-r from-red-500 to-blue-500 mx-auto mb-6"
+  // //         />
 
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.3 }}
-            className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6"
-          >
-            Our <span className="bg-gradient-to-r from-red-400 to-red-500 bg-clip-text text-transparent">Team</span>
-          </motion.h1>
+  // //         <motion.h1
+  // //           initial={{ opacity: 0, y: 20 }}
+  // //           animate={{ opacity: 1, y: 0 }}
+  // //           transition={{ duration: 0.7, delay: 0.3 }}
+  // //           className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6"
+  // //         >
+  // //           Our <span className="bg-gradient-to-r from-red-400 to-red-500 bg-clip-text text-transparent">Team</span>
+  // //         </motion.h1>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.5 }}
-            className="text-xl md:text-2xl text-blue-100 leading-relaxed"
-          >
-            Dedicated to drive data to achieve greater goals
-          </motion.p>
-        </div>
-      </div>
-    </div>
-  )
+  // //         <motion.p
+  // //           initial={{ opacity: 0, y: 20 }}
+  // //           animate={{ opacity: 1, y: 0 }}
+  // //           transition={{ duration: 0.7, delay: 0.5 }}
+  // //           className="text-xl md:text-2xl text-blue-100 leading-relaxed"
+  // //         >
+  // //           Dedicated to drive data to achieve greater goals
+  // //         </motion.p>
+  // //       </div>
+  // //     </div>
+  // //   </div>
+  // )
 }

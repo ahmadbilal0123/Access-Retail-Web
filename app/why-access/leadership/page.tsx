@@ -3,20 +3,7 @@
 import { useEffect, useRef, useState } from "react"
 import Footer from "@/components/footer"
 import LoadingScreen from "@/components/loading-screen"
-import {
-  Clock,
-  Briefcase,
-  ChevronDown,
-  Award,
-  GraduationCap,
-  Globe,
-  MapPin,
-  Mail,
-  Phone,
-  Target,
-  Users,
-  BookOpen,
-} from "lucide-react"
+import { Clock, Briefcase, ChevronDown, Award, GraduationCap, Globe, MapPin, Mail, Phone, Target, Users, BookOpen } from 'lucide-react'
 import Image from "next/image"
 
 // Leadership profile card component
@@ -29,6 +16,17 @@ const LeadershipCard = ({ leader, index }) => {
   const buttonBg = isFirstCard ? "bg-blue-800/50 hover:bg-blue-700/50" : "bg-red-800/50 hover:bg-red-700/50"
   const borderColor = isFirstCard ? "border-blue-700" : "border-red-700"
   const hoverBg = isFirstCard ? "hover:bg-blue-800/30" : "hover:bg-red-800/30"
+
+  // Function to render text with line breaks
+  const renderWithLineBreaks = (text) => {
+    if (!text) return null;
+    return text.split('\n').map((line, i) => (
+      <span key={i}>
+        {line}
+        {i < text.split('\n').length - 1 && <br />}
+      </span>
+    ));
+  };
 
   return (
     <div
@@ -67,8 +65,6 @@ const LeadershipCard = ({ leader, index }) => {
           </div>
           <p className="text-white/80 pl-7">{leader.expertise}</p>
 
-          
-
           <button
             onClick={() => setIsExpanded(!isExpanded)}
             className={`flex items-center justify-between w-full ${buttonBg} text-white p-3 rounded transition-colors mt-2`}
@@ -79,10 +75,8 @@ const LeadershipCard = ({ leader, index }) => {
 
           {isExpanded && (
             <div className="mt-4 text-white/80 space-y-4">
-              <p className="mb-3">{leader.description}</p>
-              <p className="mb-3">{leader.additionalInfo}</p>
-
-  
+              <p className="mb-3">{renderWithLineBreaks(leader.description)}</p>
+              {leader.additionalInfo && <p className="mb-3">{renderWithLineBreaks(leader.additionalInfo)}</p>}
             </div>
           )}
         </div>
@@ -100,19 +94,19 @@ const leadershipTeam = [
     experience: "30+ years",
     expertise: "Design, Insights and Commercial Lead",
     description:
-      "Over the last three decades, Mr. Haroon Ahmad has remained instrumental in developing retail market measurement in Pakistan. Prior to coming into entrepreneurial role in 2009, he headed Retail Measurement Services division of global leader in Retail Research.Having travelled to countries across North America, Europe, and Asia, he has got exposure to international best practices. With demonstrated capability to blend research expertise with insightful analysis, he has contributed to success stories of some of the key FMCG brands in the country. His passion for research, vision and strategic thinking make him an exemplary Leader.",
-      image: "https://www.accessretailpk.com/wp-content/uploads/2024/03/Haroon-Ahmed.jpg",
+      "Over the last three decades, Mr. Haroon Ahmad has remained instrumental in developing retail market measurement in Pakistan. Prior to coming into entrepreneurial role in 2009, he headed Retail Measurement Services division of global leader in Retail Research.\n\nHaving travelled to countries across North America, Europe, and Asia, he has got exposure to international best practices. With demonstrated capability to blend research expertise with insightful analysis, he has contributed to success stories of some of the key FMCG brands in the country. His passion for research, vision and strategic thinking make him an exemplary Leader.",
+    image: "https://www.accessretailpk.com/wp-content/uploads/2024/03/Haroon-Ahmed.jpg",
     color: "blue",
   },
   {
     id: 2,
     name: "Muhammad Irfan Butt",
     position: "Executive Director",
-    experience: "25+ years",
+    experience: "28+ years",
     expertise: "Operations Design & Leadership, Insights",
     description:
-      "Mr. Muhammad Irfan Butt carries to his credit extensive experience of managing large scale operations (in research & sales) inside and outside Pakistan.He co-founded Access Retail in 2009 that later became market leader in its domain. Earlier he has handled retail audit and census operations for global leader in retail research covering Middle East, North Africa & Pakistan region. Also headed regional Sales & Marketing function of a key beverage player, where he won Performance Excellence Award for 2 years consecutively. He is a go-getter and a strong leader habitual of pushing boundaries for continuous rise in performance, ",
-      image: "https://www.accessretailpk.com/wp-content/uploads/2023/11/IRFAN-BUTT.jpg",
+      "Mr. Muhammad Irfan Butt carries to his credit extensive experience of managing large scale operations (in research & sales) inside and outside Pakistan.\n\nHe co-founded Access Retail in 2009 that later became market leader in its domain. Earlier he has handled retail audit and census operations for global leader in retail research covering Middle East, North Africa & Pakistan region. Also headed regional Sales & Marketing function of a key beverage player, where he won Performance Excellence Award for 2 years consecutively. He is a go-getter and a strong leader habitual of pushing boundaries for continuous rise in performance. ",
+    image: "https://www.accessretailpk.com/wp-content/uploads/2023/11/IRFAN-BUTT.jpg",
     color: "red",
   },
 ]
@@ -176,7 +170,6 @@ export default function ServicesPage() {
               <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Meet Our Leadership</h2>
               <div className="w-32 h-1 bg-gradient-to-r from-red-500 to-blue-500 mx-auto mb-8"></div>
               <p className="text-lg text-white/80 max-w-3xl mx-auto">Passionate About Excellence In Research</p>
-          
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto">
@@ -184,12 +177,10 @@ export default function ServicesPage() {
                 <LeadershipCard key={leader.id} leader={leader} index={index} />
               ))}
             </div>
-
-           
           </div>
         </section>
-<br></br>
-<br></br>
+        <br></br>
+        <br></br>
 
         <Footer />
       </main>

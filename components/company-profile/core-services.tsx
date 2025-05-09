@@ -11,6 +11,23 @@ export function CoreServices() {
   const titleRef = useRef<HTMLHeadingElement>(null)
   const [activeTab, setActiveTab] = useState("surveyors")
   const [gsapLoaded, setGsapLoaded] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+
+  // Check if mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 640)
+    }
+
+    // Initial check
+    checkMobile()
+
+    // Add resize listener
+    window.addEventListener("resize", checkMobile)
+
+    // Cleanup
+    return () => window.removeEventListener("resize", checkMobile)
+  }, [])
 
   // Check if GSAP is loaded
   useEffect(() => {
@@ -48,7 +65,7 @@ export function CoreServices() {
 
   // Set up background animations
   useEffect(() => {
-    if (!gsapLoaded || !sectionRef.current) return
+    if (!gsapLoaded || !sectionRef.current || isMobile) return
 
     const gsap = (window as any).gsap
     if (!gsap) return
@@ -239,8 +256,17 @@ export function CoreServices() {
 
     // Update on window resize
     const handleResize = () => {
-      createConnectionLines()
-      createFloatingIcons()
+      if (window.innerWidth >= 640) {
+        createConnectionLines()
+        createFloatingIcons()
+      } else {
+        // Clean up animations on mobile
+        const lines = document.querySelectorAll(".connection-line")
+        lines.forEach((el) => el.remove())
+
+        const icons = document.querySelectorAll(".floating-service-icon")
+        icons.forEach((el) => el.remove())
+      }
     }
 
     window.addEventListener("resize", handleResize)
@@ -261,7 +287,7 @@ export function CoreServices() {
       const icons = document.querySelectorAll(".floating-service-icon")
       icons.forEach((el) => el.remove())
     }
-  }, [gsapLoaded, activeTab])
+  }, [gsapLoaded, activeTab, isMobile])
 
   const services = [
     {
@@ -275,31 +301,26 @@ export function CoreServices() {
           label: "Store Audits Monthly",
           value: "48,000",
           icon: <BarChart3 className="h-4 w-4" />,
-          isWhite: true,
         },
         {
           label: "Items Covered Monthly",
           value: "40,000+",
           icon: <Activity className="h-4 w-4" />,
-          isWhite: true,
         },
         {
           label: "Turnover Reported Annually",
           value: "Over $ 13 Billion",
           icon: <BarChart3 className="h-4 w-4" />,
-          isWhite: true,
         },
         {
           label: "Field Auditors",
           value: "250+",
           icon: <Users className="h-4 w-4" />,
-          isWhite: true,
         },
         {
           label: "Coverage",
-          value: "Pakistan & Afganistan",
+          value: "Pakistan & Afghanistan",
           icon: <Activity className="h-4 w-4" />,
-          isWhite: true,
         },
       ],
       features: ["Real-time Analytics", "Data Visualization", "Custom Reporting"],
@@ -312,32 +333,28 @@ export function CoreServices() {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, delay: 0.2 }}
       viewport={{ once: true, margin: "-100px" }}
-      className="mb-16 md:mb-24 px-2"
+      className="mb-12 md:mb-24 px-4 sm:px-6 md:px-8 max-w-7xl mx-auto"
       ref={sectionRef}
     >
-      <br></br>
-      <br></br>
-      <br></br>
+      <div className="py-8 sm:py-12 md:py-16"></div>
+
       <motion.div
         initial={{ scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.3 }}
-        className="w-24 h-1 bg-gradient-to-r from-blue-500 to-red-500 mx-auto mt-4"
+        className="w-16 sm:w-24 h-1 bg-gradient-to-r from-blue-500 to-red-500 mx-auto mt-4"
       />
-      <div className="text-center mb-12 mt-6">
-        <h2
-          ref={titleRef}
-          className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4 md:mb-6 relative inline-block"
-        >
+
+      <div className="text-center mb-8 sm:mb-12 mt-4 sm:mt-6">
+        <h2 ref={titleRef} className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4 relative inline-block">
           Operational Scope
         </h2>
-        
-      <motion.div
-        initial={{ scale: 0, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 0.5, delay: 0.3 }}
-        className="w-24 h-1 bg-gradient-to-r from-blue-500 to-red-500 mx-auto "
-      />
+        <motion.div
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="w-16 sm:w-24 h-1 bg-gradient-to-r from-blue-500 to-red-500 mx-auto"
+        />
       </div>
 
       <div className="relative">
@@ -350,54 +367,70 @@ export function CoreServices() {
                 transition={{ duration: 0.5 }}
                 className="rounded-xl overflow-hidden shadow-2xl bg-[#002147] border border-blue-900/30"
               >
-                <div className="p-8 md:p-10">
+                <div className="p-4 sm:p-6 md:p-8 lg:p-10">
                   <div className="flex flex-col items-center justify-center">
                     <div className="w-full max-w-4xl">
-                      <h3 className="text-white text-xl font-medium mb-6 pb-2 border-b border-blue-800/30">
+                      <h3 className="text-white text-lg sm:text-xl font-medium mb-4 sm:mb-6 pb-2 border-b border-blue-800/30 text-center">
                         Performance Metrics
                       </h3>
 
-                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {service.stats.map((stat, index) => (
+                      {/* First row with 3 cards - responsive grid */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 mb-3 sm:mb-4">
+                        {service.stats.slice(0, 3).map((stat, index) => (
                           <motion.div
                             key={index}
                             initial={{ opacity: 0, scale: 0.95 }}
                             animate={{ opacity: 1, scale: 1 }}
                             transition={{ duration: 0.4, delay: 0.1 + index * 0.1 }}
-                            className="rounded-lg p-5 bg-[#00326c] border border-blue-800/30 shadow-lg"
+                            className="rounded-lg p-3 sm:p-4 md:p-5 bg-[#00326c] border border-blue-800/30 shadow-lg h-auto sm:h-28 md:h-32 flex flex-col justify-center"
                           >
-                            <div
-                              className={`text-3xl font-bold mb-2 ${stat.isWhite ? "text-white" : "text-[#ff2a2a]"}`}
-                            >
+                            <div className="text-xl sm:text-2xl md:text-3xl font-bold mb-1 sm:mb-2 text-white text-center">
                               {stat.value}
-
                             </div>
-                            <div className="text-sm text-blue-100 font-medium">{stat.label}</div>
+                            <div className="text-xs sm:text-sm text-blue-100 font-medium text-center">{stat.label}</div>
                           </motion.div>
                         ))}
                       </div>
 
-                      <div className="mt-8 pt-4 border-t border-blue-800/30">
-                        <div className="flex flex-wrap gap-3 justify-center">
+                      {/* Second row with 2 centered cards - responsive grid */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 max-w-2xl mx-auto">
+                        {service.stats.slice(3, 5).map((stat, index) => (
+                          <motion.div
+                            key={index + 3}
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.4, delay: 0.1 + (index + 3) * 0.1 }}
+                            className="rounded-lg p-3 sm:p-4 md:p-5 bg-[#00326c] border border-blue-800/30 shadow-lg h-auto sm:h-28 md:h-32 flex flex-col justify-center"
+                          >
+                            <div className="text-xl sm:text-2xl md:text-3xl font-bold mb-1 sm:mb-2 text-white text-center">
+                              {stat.value}
+                            </div>
+                            <div className="text-xs sm:text-sm text-blue-100 font-medium text-center">{stat.label}</div>
+                          </motion.div>
+                        ))}
+                      </div>
+
+                      <div className="mt-6 sm:mt-8 pt-3 sm:pt-4 border-t border-blue-800/30">
+                        <div className="flex flex-wrap gap-2 sm:gap-3 justify-center">
                           <Badge
                             variant="outline"
-                            className="bg-blue-900/40 text-blue-100 border-blue-800/30 px-3 py-1 text-sm"
+                            className="bg-blue-900/40 text-blue-100 border-blue-800/30 px-2 sm:px-3 py-1 text-xs sm:text-sm"
                           >
                             Real-time Analytics
                           </Badge>
                           <Badge
                             variant="outline"
-                            className="bg-blue-900/40 text-blue-100 border-blue-800/30 px-3 py-1 text-sm"
+                            className="bg-blue-900/40 text-blue-100 border-blue-800/30 px-2 sm:px-3 py-1 text-xs sm:text-sm"
                           >
                             Data Visualization
                           </Badge>
                           <Badge
                             variant="outline"
-                            className="bg-blue-900/40 text-blue-100 border-blue-800/30 px-3 py-1 text-sm"
+                            className="bg-blue-900/40 text-blue-100 border-blue-800/30 px-2 sm:px-3 py-1 text-xs sm:text-sm"
                           >
                             Custom Reporting
                           </Badge>
-                          <Badge className="bg-gradient-to-r from-red-600 to-red-700 text-white border-none px-3 py-1 text-sm">
+                          <Badge className="bg-blue-900/40 text-blue-100 border-blue-800/30 px-2 sm:px-3 py-1 text-xs sm:text-sm">
                             Premium Service
                           </Badge>
                         </div>
