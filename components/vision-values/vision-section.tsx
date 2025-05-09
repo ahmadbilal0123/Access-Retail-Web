@@ -42,7 +42,7 @@ export default function VisionSection() {
           </div>
 
           {/* Logo and paragraph in one row */}
-          <div ref={ref} className="flex flex-col md:flex-row items-center gap-4 mb-8 sm:mb-10 md:mb-12">
+          <div ref={ref} className="flex flex-col md:flex-row items-center gap-10 mb-8 sm:mb-10 md:mb-12">
             {/* Vision icon - on the left */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
@@ -86,7 +86,7 @@ export default function VisionSection() {
                 <div className="text-blue-500 text-4xl sm:text-5xl md:text-6xl font-serif absolute -top-6 sm:-top-8 left-0 sm:left-2">
                   "
                 </div>
-                <p className="text-white text-base sm:text-lg italic px-6 sm:px-8 md:px-10 py-4 sm:py-6">
+                <p className="text-white text-base sm:text-lg italic px-4 sm:px-5 md:px-1 py-4 sm:py-4 ">
                   To deliver most innovative methodologies & research solutions and superior client servicing in
                   customized research, to ensure enduring relationships with our clients.
                 </p>

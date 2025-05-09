@@ -69,7 +69,7 @@ export default function MissionSection() {
           </div>
 
           {/* Logo and paragraph in one row */}
-          <div ref={ref} className="flex flex-col md:flex-row items-center gap-5 mb-10 sm:mb-16">
+          <div ref={ref} className="flex flex-col md:flex-row items-center gap-1 mb-10 sm:mb-16">
             {/* Target icon card - on the left, no background */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}

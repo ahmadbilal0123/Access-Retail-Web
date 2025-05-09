@@ -1071,11 +1071,12 @@ export default function ModernNavbar() {
                       </Link>
                     )}
                   </div>
-                ))}
-              </div>
-            </div>
+                  
+                ))
+                }
+                <br></br>
 
-            {/* Contact Button at Bottom */}
+                 {/* Contact Button at Bottom */}
             <div className="mt-auto px-4 pb-6 pt-4">
               <Link href="/contact" onClick={closeMobileMenu}>
                 <Button className="w-full bg-red-600 hover:bg-red-700 text-white rounded-full py-3 text-base font-medium">
@@ -1083,13 +1084,13 @@ export default function ModernNavbar() {
                 </Button>
               </Link>
             </div>
-
-            {/* User Avatar/Initial at Bottom */}
-            <div className="flex justify-center pb-6">
-              <div className="h-10 w-10 rounded-full bg-gray-800 flex items-center justify-center text-white font-bold">
-                N
               </div>
             </div>
+
+           
+
+            {/* User Avatar/Initial at Bottom */}
+            
           </motion.div>
         )}
       </AnimatePresence>
