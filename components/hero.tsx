@@ -383,7 +383,7 @@ export default function Hero() {
                 <div className="w-20 h-1 bg-gradient-to-r from-red-600 to-blue-500 animate-hero animate-quick-width mx-auto lg:mx-0"></div>
 
                 {/* Headline with quick animation */}
-                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight animate-hero animate-quick-fade">
+                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl  leading-tight tracking-tight animate-hero animate-quick-fade">
                   Insights That Make a{" "}
                   <span className="text-red-500 relative inline-block">
                     <span className="relative z-10">Difference.</span>
@@ -396,7 +396,7 @@ export default function Hero() {
                 className="text-base sm:text-lg md:text-xl text-blue-100 leading-relaxed animate-hero animate-quick-fade"
                 style={{ animationDelay: "0.2s" }}
               >
-We empower your retail performance with extensive reporting capability, and cutting edge insights befitting your information needs
+                  We empower your retail performance with extensive reporting capability, and cutting edge insights befitting your information needs
                 
               </p>
 

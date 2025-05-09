@@ -82,6 +82,13 @@ export const navItems: NavItemType[] = [
           },
         ],
       },
+       {
+        
+        id: "Transforming Market Performance",
+        title: "Transforming Market Performance",
+        href: "/services/transforming-market-perfomance",
+      },
+     
       // {
       //   id: "quantitative",
       //       title: "Quantitative Consumetrics",

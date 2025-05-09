@@ -4,24 +4,7 @@ import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
-import {
-  Menu,
-  X,
-  ChevronDown,
-  Search,
-  Home,
-  Info,
-  Layers,
-  Zap,
-  Award,
-  FileText,
-  Mail,
-  ChevronRight,
-  Star,
-  Loader2,
-  Briefcase,
-  Heart,
-} from "lucide-react"
+import { Menu, X, ChevronDown, Search, Home, Info, Layers, Zap, Award, FileText, Mail, ChevronRight, Star, Loader2, Briefcase, Heart } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { navItems, type NavItemType } from "./navbar-items"
@@ -35,8 +18,6 @@ const allPages = [
   { id: "about", title: "About Us", href: "/about#company-profile", category: "Main" },
   { id: "leadership", title: "Leadership", href: "/why-access/leadership", category: "Main" },
   { id: "why-access", title: "Why Access Retail?", href: "/why-access/success-story", category: "Main" },
-  { id: "life-at-access", title: "Life @ Access Retail", href: "/why-access/life-in-access", category: "Main" },
-  { id: "careers", title: "Careers", href: "/why-access/career", category: "Main" },
   { id: "contact", title: "Contact Us", href: "/contact", category: "Main" },
 
   // About Us pages
@@ -74,13 +55,6 @@ const allPages = [
   // Why Access pages
   { id: "success-story", title: "Success Story", href: "/why-access/success-story", category: "Why Access Retail?" },
   { id: "leadership-team", title: "Leadership Team", href: "/why-access/leadership", category: "Why Access Retail?" },
-  {
-    id: "life-in-access",
-    title: "Life in Access",
-    href: "/why-access/life-in-access",
-    category: "Life @ Access Retail",
-  },
-  { id: "career-opportunities", title: "Career Opportunities", href: "/why-access/career", category: "Careers" },
 ]
 
 // Enhanced function to flatten nested navigation items for search
@@ -567,10 +541,10 @@ export default function ModernNavbar() {
           scrolled ? "bg-blue-950/90 backdrop-blur-md py-1 shadow-lg shadow-blue-900/50" : "bg-transparent py-2",
         )}
       >
-        <div className="container mx-auto px-2 sm:px-4 md:px-6 lg:px-4 xl:px-8 flex justify-center">
-          <div className="flex items-center h-14 md:h-16 w-full max-w-7xl">
-            {/* Logo */}
-            <div className="flex-shrink-0 relative group mr-auto">
+        <div className="container mx-auto px-2 sm:px-4 md:px-6 lg:px-4 xl:px-8">
+          <div className="flex items-center justify-between h-14 md:h-16 w-full max-w-7xl mx-auto">
+            {/* Logo - Centered in its area */}
+            <div className="flex-shrink-0 relative group flex items-center justify-center w-[200px]">
               <Link href="/" className="flex items-center">
                 <div className="relative h-6 w-24 sm:h-7 sm:w-28 md:h-8 md:w-32 transition-transform duration-300 group-hover:scale-105">
                   <Image
@@ -587,14 +561,14 @@ export default function ModernNavbar() {
             {/* Mobile Menu Button - Show earlier on smaller screens */}
             <button
               onClick={toggleMobileMenu}
-              className="ml-2 p-2 lg:hidden text-blue-100 hover:text-white rounded-full hover:bg-white/5 transition-colors"
+              className="ml-20 p-2 lg:hidden text-blue-100 hover:text-white rounded-full hover:bg-white/5 transition-colors"
               aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
             >
               {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
 
             {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center space-x-0.5 xl:space-x-1 whitespace-nowrap text-xs sm:text-sm">
+            <nav className="hidden lg:flex items-center justify-center space-x-0.5 xl:space-x-1 whitespace-nowrap text-xs sm:text-sm flex-1">
               {navItems.map((item) => (
                 <div key={item.id} className="relative group">
                   {item.children ? (
@@ -657,7 +631,7 @@ export default function ModernNavbar() {
             </nav>
 
             {/* Right Side Actions */}
-            <div className="flex items-center">
+            <div className="flex items-center w-[100px] justify-end">
               {/* Search Button */}
               <button
                 onClick={toggleSearch}
@@ -862,28 +836,16 @@ export default function ModernNavbar() {
                           </div>
                           <ChevronRight className="h-4 w-4 text-blue-400/70" />
                         </Link>
+                      
                         <Link
-                          href="/why-access/life-in-access"
+                          href="/"
                           onClick={() => setSearchOpen(false)}
                           className="flex items-center px-4 py-3 text-blue-100 hover:bg-blue-800/40 transition-colors border-b border-blue-800/30"
                         >
                           <div className="flex-1">
                             <div className="flex items-center">
-                              <Zap className="h-5 w-5 mr-2 text-blue-300" />
-                              <p className="font-medium">Life @ Access Retail</p>
-                            </div>
-                          </div>
-                          <ChevronRight className="h-4 w-4 text-blue-400/70" />
-                        </Link>
-                        <Link
-                          href="/why-access/career"
-                          onClick={() => setSearchOpen(false)}
-                          className="flex items-center px-4 py-3 text-blue-100 hover:bg-blue-800/40 transition-colors border-b border-blue-800/30"
-                        >
-                          <div className="flex-1">
-                            <div className="flex items-center">
-                              <Briefcase className="h-5 w-5 mr-2 text-blue-300" />
-                              <p className="font-medium">Careers</p>
+                              <Layers className="h-5 w-5 mr-2 text-blue-300" />
+                              <p className="font-medium">What We Offer/Our Services</p>
                             </div>
                           </div>
                           <ChevronRight className="h-4 w-4 text-blue-400/70" />
@@ -920,7 +882,7 @@ export default function ModernNavbar() {
           </motion.div>
         )}
       </AnimatePresence>
-     
+
       {/* Mobile Menu Overlay */}
       <AnimatePresence>
         {mobileMenuOpen && (
@@ -931,7 +893,7 @@ export default function ModernNavbar() {
             transition={{ duration: 0.2 }}
             className="fixed inset-0 z-40 lg:hidden bg-[#001333] pt-16 overflow-y-auto flex flex-col"
           >
-            <div className="container mx-auto px-4 py-4 flex-1">
+            <div className="container mx-auto px-4 py-4 flex-1 flex flex-col items-center">
               {/* Mobile Menu Header with Logo and Close Button */}
               <div className="flex items-center justify-between mb-6 absolute top-4 left-0 right-0 px-4">
                 <div className="relative h-8 w-32">
@@ -1071,26 +1033,21 @@ export default function ModernNavbar() {
                       </Link>
                     )}
                   </div>
-                  
-                ))
-                }
+                ))}
                 <br></br>
 
-                 {/* Contact Button at Bottom */}
-            <div className="mt-auto px-4 pb-6 pt-4">
-              <Link href="/contact" onClick={closeMobileMenu}>
-                <Button className="w-full bg-red-600 hover:bg-red-700 text-white rounded-full py-3 text-base font-medium">
-                  Contact Us
-                </Button>
-              </Link>
-            </div>
+                {/* Contact Button at Bottom */}
+                <div className="mt-auto px-4 pb-6 pt-4">
+                  <Link href="/contact" onClick={closeMobileMenu}>
+                    <Button className="w-full bg-red-600 hover:bg-red-700 text-white rounded-full py-3 text-base font-medium">
+                      Contact Us
+                    </Button>
+                  </Link>
+                </div>
               </div>
             </div>
 
-           
-
             {/* User Avatar/Initial at Bottom */}
-            
           </motion.div>
         )}
       </AnimatePresence>
@@ -1151,7 +1108,7 @@ function DesktopDropdown({ items, parentId, setActiveDropdown }: DesktopDropdown
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 10 }}
       transition={{ duration: 0.2 }}
-      className="absolute top-full left-0 mt-2 bg-blue-950/95 backdrop-blur-md border border-blue-800/50 rounded-xl shadow-xl z-50 w-[250px] lg:w-[280px]"
+      className="absolute top-full left-0 mt-2 bg-blue-950/95 backdrop-blur-md border border-blue-800/50 rounded-xl shadow-xl z-50 w-[350px] lg:w-[580px]"
     >
       <div className="p-2 min-w-[250px] lg:min-w-[280px] max-w-[600px]">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-1">

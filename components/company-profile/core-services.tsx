@@ -413,24 +413,25 @@ export function CoreServices() {
                       <div className="mt-6 sm:mt-8 pt-3 sm:pt-4 border-t border-blue-800/30">
                         <div className="flex flex-wrap gap-2 sm:gap-3 justify-center">
                           <Badge
-                            variant="outline"
+                            
                             className="bg-blue-900/40 text-blue-100 border-blue-800/30 px-2 sm:px-3 py-1 text-xs sm:text-sm"
                           >
                             Real-time Analytics
                           </Badge>
                           <Badge
-                            variant="outline"
+                            
                             className="bg-blue-900/40 text-blue-100 border-blue-800/30 px-2 sm:px-3 py-1 text-xs sm:text-sm"
                           >
                             Data Visualization
                           </Badge>
                           <Badge
-                            variant="outline"
+                            
                             className="bg-blue-900/40 text-blue-100 border-blue-800/30 px-2 sm:px-3 py-1 text-xs sm:text-sm"
                           >
                             Custom Reporting
                           </Badge>
-                          <Badge className="bg-blue-900/40 text-blue-100 border-blue-800/30 px-2 sm:px-3 py-1 text-xs sm:text-sm">
+                          <Badge
+                           className="bg-blue-900/40 text-blue-100 border-blue-800/30 px-2 sm:px-3 py-1 text-xs sm:text-sm">
                             Premium Service
                           </Badge>
                         </div>

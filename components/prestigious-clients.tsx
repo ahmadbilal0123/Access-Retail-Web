@@ -23,7 +23,7 @@ export default function PrestigiousClients() {
     { name: "Engro", industry: "Conglomerate", logo: "https://mir-s3-cdn-cf.behance.net/projects/404/4ba83b187132161.Y3JvcCw4MDgsNjMyLDI0LDA.png" },
     { name: "", industry: "Telecom", logo: "/jazz.png" },
     { name: "Telenor", industry: "Telecom", logo: "https://upload.wikimedia.org/wikipedia/commons/6/60/Telenor_logo.svg" },
-    { name: "", industry: "Telecom", logo: "./zong.png" },
+    { name: "", industry: "Telecom", logo: "./Zong.png" },
     { name: "", industry: "Food", logo: "/shan.png" },
     { name: "", industry: "Beverages", logo: "/tapal.png" },
     { name: "Colgate-Palmolive", industry: "FMCG", logo: "/colgate.png" },

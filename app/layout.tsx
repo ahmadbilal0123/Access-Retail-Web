@@ -19,9 +19,11 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <link rel="icon" href="https://www.accessretailpk.com/wp-content/uploads/2024/03/AR-logo01-trasparent.png" type="image/png" />
         {/* Add external script file for scroll prevention */}
         <Script src="/scroll-fix.js" strategy="beforeInteractive" />
       </head>

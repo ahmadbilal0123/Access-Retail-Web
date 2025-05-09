@@ -274,7 +274,7 @@ export default function TransformingMarketPerformancePage() {
                     
                   </motion.div>
 
-                  <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6">
+                  <h1 className="text-5xl md:text-6xl lg:text-7xl text-white leading-tight mb-6">
                     Transforming
                     <br />
                     <span className="bg-clip-text text-transparent bg-gradient-to-r from-red-500 to-blue-500">
@@ -564,111 +564,7 @@ export default function TransformingMarketPerformancePage() {
           </div>
         </section>
 
-        {/* Our Approach Section */}
-        <section className="py-20 bg-[#001a40]/50 backdrop-blur-sm">
-          <div className="container mx-auto px-4">
-            <motion.div
-              className="text-center mb-16"
-              variants={fadeIn}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.2 }}
-            >
-              <div className="flex justify-center mb-4">
-                <motion.div
-                  className="h-1 w-16 bg-gradient-to-r from-red-500 to-blue-500"
-                  initial={{ width: 0 }}
-                  whileInView={{ width: 64 }}
-                  transition={{ duration: 0.8 }}
-                  viewport={{ once: true }}
-                />
-              </div>
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Our Approach</h2>
-              <p className="text-white/80 max-w-2xl mx-auto">
-                A strategic methodology designed to deliver measurable results and sustainable market growth
-              </p>
-            </motion.div>
-
-            <div className="max-w-5xl mx-auto">
-              <div className="relative">
-                {/* Central line */}
-                <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-red-500 via-blue-500 to-red-500 transform -translate-x-1/2 hidden md:block"></div>
-
-                {[
-                  {
-                    
-                    title: "Comprehensive Assessment",
-                    description:
-                      "We begin with a thorough analysis of your current market position, competitive landscape, and retail presence to identify strengths, weaknesses, and opportunities.",
-                    icon: <Target className="h-8 w-8 text-white" />,
-                    color: "from-red-600 to-red-700",
-                  },
-                  {
-                    
-                    title: "Strategic Planning",
-                    description:
-                      "Based on our assessment, we develop a tailored strategy to address your specific challenges and capitalize on identified opportunities for market growth.",
-                    icon: <LineChart className="h-8 w-8 text-white" />,
-                    color: "from-blue-600 to-blue-700",
-                  },
-                  {
-                  
-                    title: "Implementation & Execution",
-                    description:
-                      "Our experienced team works closely with you to implement the strategic plan, ensuring all elements are executed with precision and attention to detail.",
-                    icon: <Zap className="h-8 w-8 text-white" />,
-                    color: "from-red-600 to-red-700",
-                  },
-                  {
-                    
-                    title: "Monitoring & Optimization",
-                    description:
-                      "We continuously monitor performance metrics and market dynamics, making data-driven adjustments to optimize results and ensure sustainable growth.",
-                    icon: <BarChart2 className="h-8 w-8 text-white" />,
-                    color: "from-blue-600 to-blue-700",
-                  },
-                ].map((step, index) => (
-                  <motion.div
-                    key={index}
-                    className={`flex flex-col md:flex-row items-center md:items-start gap-8 mb-16 last:mb-0 relative ${
-                      index % 2 === 1 ? "md:flex-row-reverse" : ""
-                    }`}
-                    variants={index % 2 === 0 ? slideInLeft : slideInRight}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, amount: 0.2 }}
-                  >
-                    {/* Step number with icon */}
-                    <div className="relative z-10 flex-shrink-0">
-                      <div
-                        className={`w-20 h-20 rounded-full bg-gradient-to-br ${step.color} flex items-center justify-center text-white text-2xl font-bold shadow-lg`}
-                      >
-                        {step.number}
-                      </div>
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <motion.div
-                          className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center"
-                          animate={{ scale: [1, 1.2, 1] }}
-                          transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-                        >
-                          {step.icon}
-                        </motion.div>
-                      </div>
-                    </div>
-
-                    {/* Content */}
-                    <div className={`md:w-1/2 ${index % 2 === 0 ? "md:text-left" : "md:text-right"}`}>
-                      <div className="bg-[#001f4d]/70 backdrop-blur-sm rounded-xl p-6 border border-blue-900/50">
-                        <h3 className="text-xl font-bold text-white mb-3">{step.title}</h3>
-                        <p className="text-white/80">{step.description}</p>
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
+       
 
 
         <br></br>

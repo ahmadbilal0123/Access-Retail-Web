@@ -91,8 +91,8 @@ export default function Footer() {
               {/* <FooterLink href="/capabilities" label="Capabilities" /> */}
               <FooterLink href="/why-access/leadership" label="Leadership" />
               <FooterLink href="/why-access/success-story" label="Why Access Retail?" />
-              <FooterLink href="/why-access/life-in-access" label="Life @ Access Retail  " />
-              <FooterLink href="/why-access/career" label="Careers" />
+              {/* <FooterLink href="/why-access/life-in-access" label="Life @ Access Retail  " />
+              <FooterLink href="/why-access/career" label="Careers" /> */}
               {/* <FooterLink href="/blog" label="Blog" /> */}
               <FooterLink href="/contact" label="Contact" />
             </ul>
@@ -104,11 +104,11 @@ export default function Footer() {
             <ul className="space-y-4">
               <li className="flex items-start">
                 <MapPin className="text-red-400 mr-3 h-5 w-5 flex-shrink-0 mt-1" />
-                <span className="text-blue-100">123 Business Avenue, Karachi, Pakistan</span>
+                <span className="text-blue-100">34-M - Royal Complex - 3rd & 4th Floor, Ext, M block Block M Commercial Area Model Town, Lahore, 54700</span>
               </li>
               <li className="flex items-center">
                 <Phone className="text-red-400 mr-3 h-5 w-5 flex-shrink-0" />
-                <span className="text-blue-100">+92 123 456 7890</span>
+                <span className="text-blue-100">(042) 35201852</span>
               </li>
               <li className="flex items-center">
                 <Mail className="text-red-400 mr-3 h-5 w-5 flex-shrink-0" />

@@ -345,7 +345,7 @@ export default function WhyAccessPage() {
               transition={{ duration: 0.8 }}
             >
           
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl  leading-tight tracking-tight animate-hero animate-quick-fade">
                 Why{" "}
                 <span className="bg-clip-text text-transparent bg-gradient-to-r from-red-500 to-red-600">Access</span>{" "}
                 <span className="text-white">Retail?</span>
